@@ -2,9 +2,11 @@
 name = "The Core"
 version = "0.1.0"
 description = "The core of the software product on the backend side"
+authors = ["Divider"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+pytest = "^7.0.1"
 
 [tool.poetry.dev-dependencies]
 

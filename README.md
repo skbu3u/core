@@ -1,3 +1,2 @@
-# core
+# The Core
 Main logic of application
-Test from Xan
