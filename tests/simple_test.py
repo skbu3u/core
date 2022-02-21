@@ -1,7 +1,7 @@
 import pytest
 from main import greet
 
-entry = 'Hello'
+entry = 123
 
 
 def test_is_str():
