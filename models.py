@@ -44,13 +44,3 @@ class XeroxPart(Xerox):
 
     def some_method(self):
         pass
-
-
-part_1 = PrinterPart()
-part_1.info()
-
-part_2 = ScanerPart()
-part_2.info()
-
-part_3 = XeroxPart()
-part_3.info()
