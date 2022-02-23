@@ -1,3 +1,4 @@
+import json
 import pytest
 from classes.SparePart import *
 
@@ -22,4 +23,5 @@ def test_add_part():
 
 def test_to_json():
     part = SparePart('Drum Unit for LaserJet 1020')
-    assert part.to_json() == '{"name": "Drum Unit for LaserJet 1020", "parts": ["Drum Unit for LaserJet 1020"]}'
+    # assert part.to_json() == '{"name": "Drum Unit for LaserJet 1020", "parts": ["Drum Unit for LaserJet 1020"]}'
+    assert isinstance(json.loads(part.to_json()), dict)
