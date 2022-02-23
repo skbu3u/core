@@ -1,5 +1,5 @@
 import json
-from Exceptions.ClassInitializationError import *
+from exceptions.ClassInitializationError import *
 
 
 class SparePart:
@@ -9,8 +9,13 @@ class SparePart:
     def __init__(self, name):
         if isinstance(name, str):
             self.__name = name
+            self.__parts.append(name)
         else:
             raise ClassInitializationError('Name must be string')
+
+    def get_parts_info(self):
+        parts = self.__parts
+        return parts
 
     def add_part(self, parts):
         if isinstance(parts, list):
