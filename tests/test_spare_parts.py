@@ -22,4 +22,4 @@ def test_add_part():
 
 def test_to_json():
     part = SparePart('Drum Unit for LaserJet 1020')
-    assert part.to_json() == '{"name": "Drum Unit for LaserJet 1020", "parts": []}'
+    assert part.to_json() == '{"name": "Drum Unit for LaserJet 1020", "parts": ["Drum Unit for LaserJet 1020"]}'
