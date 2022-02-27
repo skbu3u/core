@@ -1,4 +1,3 @@
-import json
 from exceptions.ClassInitializationError import *
 
 
@@ -9,7 +8,7 @@ class SparePart:
     def __init__(self, name):
         if isinstance(name, str):
             self.__name = name
-            self.__parts.append(name)
+            # self.__parts.append(name)
         else:
             raise ClassInitializationError('Name must be string')
 
@@ -22,7 +21,3 @@ class SparePart:
             self.__parts += parts
         else:
             raise ClassInitializationError('Parts must be array of SparePart')
-
-    def to_json(self):
-        json_data = {'name': self.__name, 'parts': self.__parts}
-        return json.dumps(json_data)

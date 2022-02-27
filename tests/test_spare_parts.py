@@ -14,12 +14,10 @@ def test_exception_if_spare_part_name_not_a_string():
 
 
 def test_add_part():
-    part = SparePart('Feed Drive for LaserJet 1020')
-    parts_list = ['Repair kit for LaserJet 1020', 'Fuser for LaserJet 1020', 'Main Motor for LaserJet 1020']
-    part.add_part(parts_list)
-    assert isinstance(part.get_parts_info(), list)
-
-
-def test_to_json():
-    part = SparePart('Drum Unit for LaserJet 1020')
-    assert isinstance(json.loads(part.to_json()), dict)
+    part_1 = SparePart('Feed Drive for LaserJet 1020')
+    part_2 = SparePart('Repair kit for LaserJet 1020')
+    part_3 = SparePart('Fuser for LaserJet 1020')
+    part_4 = SparePart('Main Motor for LaserJet 1020')
+    part_1.add_part([part_2, part_3, part_4])
+    for part in part_1.get_parts_info():
+        assert isinstance(part, SparePart)
