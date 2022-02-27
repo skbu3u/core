@@ -1,0 +1,2 @@
+class ClassInitializationError(NameError):
+    pass
