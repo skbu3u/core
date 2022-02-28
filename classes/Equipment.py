@@ -1,3 +1,4 @@
+from classes.SparePart import *
 from exceptions.ClassInitializationError import *
 
 
@@ -11,12 +12,17 @@ class Equipment:
         else:
             raise ClassInitializationError('Name must be string')
 
-    def get_parts_info(self):
+    def get_parts(self):
         parts = self.__parts
         return parts
 
     def add_part(self, parts):
-        if isinstance(parts, list):
-            self.__parts += parts
-        else:
+        if not isinstance(parts, list):
             raise ClassInitializationError('Parts must be array of SparePart')
+        else:
+            for part in parts:
+                if isinstance(part, SparePart):
+                    pass
+                else:
+                    raise ClassInitializationError('Part must be SparePart class')
+            self.__parts += parts

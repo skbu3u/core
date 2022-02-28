@@ -19,5 +19,5 @@ def test_add_part():
     part_3 = SparePart('Fuser for LaserJet 1020')
     part_4 = SparePart('Main Motor for LaserJet 1020')
     part_1.add_part([part_2, part_3, part_4])
-    for part in part_1.get_parts_info():
+    for part in part_1.get_parts():
         assert isinstance(part, SparePart)
