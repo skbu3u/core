@@ -1,7 +1,8 @@
+from classes.SparePart import *
 from exceptions.ClassInitializationError import *
 
 
-class SparePart:
+class Equipment:
     __parts = []
     __name = ''
 
