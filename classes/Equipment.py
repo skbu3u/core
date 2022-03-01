@@ -16,6 +16,9 @@ class Equipment:
         parts = self.__parts
         return parts
 
+    def info(self):
+        return f'Модель: {self.__name}\nСписок запчастей: {self.__parts}'
+
     def add_part(self, parts):
         if not isinstance(parts, list):
             raise ClassInitializationError('Parts must be array of SparePart')
