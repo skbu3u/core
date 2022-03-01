@@ -9,7 +9,7 @@ class Report(Equipment):
         self.price = price
 
     def info(self):
-        Equipment
+        pass
 
 
 report = Report('HP LaserJet 1020', 200)
