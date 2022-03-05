@@ -8,6 +8,13 @@ class Report:
     def add_to(self, equipment):
         self._dict.setdefault(equipment.group_name(), []).append(equipment)
 
+    # def extract(self, name):
+    #     if self._dict[name]:
+    #         self._dict.setdefault(name).pop(0)
+    @property
+    def dict(self):
+        return self._dict
+
 
 class Equipment:
     def __init__(self, name, price):
@@ -34,5 +41,5 @@ report.add_to(part_1)
 part_2 = SparePart('canon', '1211')
 report.add_to(part_2)
 
-# выводим склад
-print(report._dict)
+# выводим журнал
+print(report.dict)
