@@ -3,29 +3,33 @@ from exceptions.ClassInitializationError import *
 
 
 class Equipment:
-    __parts = []
-    __name = ''
-
     def __init__(self, name):
         if isinstance(name, str):
             self.__name = name
         else:
             raise ClassInitializationError('Name must be string')
+        self.__dict = {}
 
-    def get_parts(self):
-        parts = self.__parts
-        return parts
+    def add_part(self, part):
+        if isinstance(part, SparePart):
+            self.__dict.setdefault(self.__name, []).append(part)
+        else:
+            raise ClassInitializationError('Part must be SparePart class')
 
-    def info(self):
-        return f'Модель: {self.__name}\nСписок запчастей: {self.__parts}'
-
-    def add_part(self, parts):
-        if not isinstance(parts, list):
+    def add_part_list(self, part_list):
+        if not isinstance(part_list, list):
             raise ClassInitializationError('Parts must be array of SparePart')
         else:
-            for part in parts:
+            for part in part_list:
                 if isinstance(part, SparePart):
-                    pass
+                    self.__dict.setdefault(self.__name, []).append(part)
                 else:
                     raise ClassInitializationError('Part must be SparePart class')
-            self.__parts += parts
+
+    def extract_part(self, part):
+        if self.__dict[part]:
+            self.__dict.setdefault(part).pop(0)
+
+    @property
+    def dict(self):
+        return self.__dict
