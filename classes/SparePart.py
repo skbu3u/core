@@ -2,26 +2,13 @@ from exceptions.ClassInitializationError import *
 
 
 class SparePart:
-    __parts = []
-    __name = ''
 
-    def __init__(self, name):
-        if isinstance(name, str):
+    def __init__(self, name, price):
+        if isinstance(name, str) and isinstance(price, int):
             self.__name = name
+            self.__price = price
         else:
-            raise ClassInitializationError('Name must be string')
+            raise ClassInitializationError('Name must be string and price must be integer')
 
-    def get_parts(self):
-        parts = self.__parts
-        return parts
-
-    def add_part(self, parts):
-        if not isinstance(parts, list):
-            raise ClassInitializationError('Parts must be array of SparePart')
-        else:
-            for part in parts:
-                if isinstance(part, SparePart):
-                    pass
-                else:
-                    raise ClassInitializationError('Part must be SparePart class')
-            self.__parts += parts
+    def __repr__(self):
+        return f'{self.__name} - {self.__price}$'
