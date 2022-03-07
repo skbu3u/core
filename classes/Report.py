@@ -8,4 +8,4 @@ class Report:
         if isinstance(equipment, Equipment):
             self.info = equipment.dict
         else:
-            raise ClassInitializationError('Name must be string')
+            raise ClassInitializationError('Equipment must be Equipment class')

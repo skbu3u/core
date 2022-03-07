@@ -3,6 +3,7 @@ from exceptions.ClassInitializationError import *
 
 
 class Equipment:
+
     def __init__(self, name):
         if isinstance(name, str):
             self.__name = name
