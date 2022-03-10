@@ -20,4 +20,4 @@ def test_add_parts_to_model():
     part_3 = SparePart('Fuser for LaserJet 1020', 80)
     part_4 = SparePart('Main Motor for LaserJet 1020', 40)
     model.add_part_list([part_1, part_2, part_3, part_4])
-    assert isinstance(model.dict, dict)
+    assert isinstance(model.get_parts, dict)

@@ -1,36 +1,34 @@
-from classes.SparePart import *
-from exceptions.ClassInitializationError import *
+from classes.SparePart import SparePart
+from exceptions.ClassInitializationError import ClassInitializationError
 
 
 class Equipment:
 
     def __init__(self, name):
+        self.__parts = {}
+        self.__included_parts = []
         if isinstance(name, str):
             self.__name = name
         else:
-            raise ClassInitializationError('Name must be string')
-        self.__dict = {}
+            raise ClassInitializationError('Name must be string and price must be integer')
 
     def add_part(self, part):
         if isinstance(part, SparePart):
-            self.__dict.setdefault(self.__name, []).append(part)
+            if part.get_parts:
+                self.__included_parts.append(part.get_parts)
+            else:
+                self.__included_parts.append(part)
+            self.__parts = {self.__name: {'Included_parts': self.__included_parts}}
         else:
             raise ClassInitializationError('Part must be SparePart class')
 
     def add_part_list(self, part_list):
-        if not isinstance(part_list, list):
-            raise ClassInitializationError('Parts must be array of SparePart')
-        else:
+        if isinstance(part_list, list):
             for part in part_list:
-                if isinstance(part, SparePart):
-                    self.__dict.setdefault(self.__name, []).append(part)
-                else:
-                    raise ClassInitializationError('Part must be SparePart class')
-
-    def extract_part(self, part):
-        if self.__dict[part]:
-            self.__dict.setdefault(part).pop(0)
+                self.add_part(part)
+        else:
+            raise ClassInitializationError('Parts must be array of SparePart')
 
     @property
-    def dict(self):
-        return self.__dict
+    def get_parts(self):
+        return self.__parts
