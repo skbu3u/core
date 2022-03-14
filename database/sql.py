@@ -1,38 +1,12 @@
-from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 
-engine = create_engine('sqlite:///test.db', echo=True)
-conn = engine.connect()
-meta = MetaData()
+SQLALCHEMY_DATABASE_URL = "sqlite:///sqlite.db"
 
-part = Table(
-    'part', meta,
-    Column('id', Integer, primary_key=True),
-    Column('name', String),
-    Column('price', Integer),
+engine = create_engine(
+    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}  # , echo=True
 )
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-
-def create_table():
-    meta.create_all(engine)
-
-
-def insert_values(name, price):
-    conn.execute(part.insert().values(name=name, price=price))
-
-
-def print_values():
-    parts = part.select()
-    result = conn.execute(parts)
-
-    for row in result:
-        print(row)
-
-
-def delete_values():
-    conn.execute(part.delete().where(part.c.name == 'Toner'))
-
-
-# insert_values('Cartridge', 50)
-# insert_values('Toner', 10)
-delete_values()
-print_values()
+Base = declarative_base()
