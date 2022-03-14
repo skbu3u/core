@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, DateTime
+from sqlalchemy import Column, String, Integer
 from database.sql import Base
 
 
@@ -7,7 +7,6 @@ class Equipment(Base):
     id = Column(Integer, primary_key=True, index=True, unique=True)
     part = Column(String)
     price = Column(Integer)
-    date = Column(DateTime)
 
 
 db = Equipment.__table__

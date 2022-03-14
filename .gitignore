@@ -129,5 +129,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-!/database/migration/versions/769137065535_initial.py
-!/tests/sqlite.db
