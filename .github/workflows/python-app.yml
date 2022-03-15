@@ -23,12 +23,11 @@ jobs:
         pip install flake8 pytest poetry
         if [ -f pyproject.toml ]; then poetry install; fi
     - name: Create database
-      run: |   
-        yum install -y python-alembic
+      run: |
         cd database
         ls 
-        alembic revision --autogenerate -m 'Initial'              
-        alembic upgrade head
+        python -m alembic revision --autogenerate -m 'Initial'              
+        python -m alembic upgrade head
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
