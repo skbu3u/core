@@ -24,6 +24,7 @@ jobs:
         if [ -f pyproject.toml ]; then poetry install; fi
     - name: Create database
       run: |   
+        cd database
         ls
         working-directory: ./database
         alembic revision --autogenerate -m 'Initial'
