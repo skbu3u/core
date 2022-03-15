@@ -1,3 +1,5 @@
+import os
+from os.path import abspath, dirname
 import sys
 from logging.config import fileConfig
 
@@ -6,7 +8,8 @@ from sqlalchemy import pool
 
 from alembic import context
 
-sys.path = ['', '..'] + sys.path[1:]
+#sys.path = ['', '..'] + sys.path[1:]
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 
 from database.sql import SQLALCHEMY_DATABASE_URL
 from database.models.base import Base
