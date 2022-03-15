@@ -25,7 +25,9 @@ jobs:
     - name: Create database
       run: |
         cd database
-        if [ -f alembic.ini ]; then alembic revision --autogenerate -m 'Initial' & alembic upgrade head; fi
+        ls
+        alembic revision --autogenerate -m 'Initial'
+        alembic upgrade head
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
