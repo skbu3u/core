@@ -24,11 +24,10 @@ jobs:
         if [ -f pyproject.toml ]; then poetry install; fi
     - name: Create database
       run: |   
-        pwd
-        mkdir database
+        pwd        
         cd database
         pwd
-        alembic revision --autogenerate -m 'Initial'
+        if [ -f alembic.ini ]; then alembic revision --autogenerate -m 'Initial'; fi        
         alembic upgrade head
     - name: Lint with flake8
       run: |
