@@ -25,9 +25,7 @@ jobs:
     - name: Create database
       run: |   
         cd database
-        ls
-        working-directory: ./database
-        alembic revision --autogenerate -m 'Initial'
+        ls        
         alembic upgrade head
     - name: Lint with flake8
       run: |
