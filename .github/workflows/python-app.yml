@@ -27,8 +27,7 @@ jobs:
         pwd        
         cd database
         pwd
-        if [ -f alembic.ini ]; then alembic revision --autogenerate -m 'Initial'; fi        
-        alembic upgrade head
+        if [ -f alembic.ini ]; then alembic revision --autogenerate -m 'Initial' & alembic upgrade head; fi        
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
