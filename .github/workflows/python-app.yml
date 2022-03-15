@@ -24,6 +24,7 @@ jobs:
         if [ -f pyproject.toml ]; then poetry install; fi
     - name: Create database
       run: |   
+        yum install -y python-alembic
         cd database
         ls 
         alembic revision --autogenerate -m 'Initial'              
