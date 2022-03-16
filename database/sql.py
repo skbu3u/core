@@ -6,6 +6,9 @@ from pathlib import Path
 
 is_database = sorted(Path(sys.path[1]).glob('**/sqlite.db'))
 
+print(f'\nPath = {is_database}\n')
+print(f'\nSystem path = {sys.path[1]}\n')
+
 if is_database:
     SQLALCHEMY_DATABASE_URL = f"sqlite:///{sys.path[1]}/database/sqlite.db"
 else:
