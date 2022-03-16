@@ -2,13 +2,14 @@ import sys
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from pathlib import Path
 
-print(f'\nSystem path = {sys.path}\n')
+is_database = sorted(Path(sys.path[1]).glob('**/sqlite.db'))
 
-if 'alembic' in sys.path[1]:
-    SQLALCHEMY_DATABASE_URL = f"sqlite:///database/sqlite.db"
-else:
+if is_database:
     SQLALCHEMY_DATABASE_URL = f"sqlite:///{sys.path[1]}/database/sqlite.db"
+else:
+    SQLALCHEMY_DATABASE_URL = f"sqlite:///database/sqlite.db"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}  # , echo=True
