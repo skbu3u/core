@@ -6,8 +6,6 @@ from sqlalchemy import pool
 
 from alembic import context
 
-sys.path = ['', '..'] + sys.path[1:]
-
 from database.sql import SQLALCHEMY_DATABASE_URL
 from database.models.base import Base
 
