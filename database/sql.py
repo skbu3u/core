@@ -3,7 +3,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-print(f'\nSystem path = {sys.path[1]}\n')
+print(f'\nSystem path = {sys.path}\n')
+
 if 'alembic' in sys.path[1]:
     SQLALCHEMY_DATABASE_URL = f"sqlite:///database/sqlite.db"
 else:
