@@ -1,24 +1,30 @@
-from classes.SparePart import SparePart
-from classes.Equipment import Equipment
-from classes.Report import Report
+import uvicorn
+from fastapi import FastAPI, APIRouter
+from fastapi.middleware.cors import CORSMiddleware
+from api.routes import users, security
 
-part_1 = SparePart('Картридж', 10)
-part_1_1 = SparePart('Тонер', 3)
-part_1_2 = SparePart('Вал', 5)
-part_1_3 = SparePart('Ракель', 2)
-part_2 = SparePart('Печь', 40)
-part_3 = SparePart('Плата', 70)
+app = FastAPI()
+route = APIRouter()
 
-part_1.add_part(part_1_1)
-part_1.add_part_list([part_1_2, part_1_3])
 
-model = Equipment('Принтер')
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-model.add_part(part_1)
-model.add_part_list([part_2, part_3])
 
-report = Report(model)
+@app.get('/')
+def home():
+    return {'msg': 'Hello World'}
 
+
+route.include_router(users.users_route, prefix='/users', tags=['users'])
+route.include_router(security.security_route, prefix='/security', tags=['security'])
+
+app.include_router(route)
 
 if __name__ == '__main__':
-    print(report.info)
+    uvicorn.run('main:app', reload=True)

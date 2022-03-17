@@ -9,6 +9,10 @@ python = "^3.10"
 pytest = "^7.0.1"
 SQLAlchemy = "^1.4.32"
 alembic = "^1.7.6"
+fastapi = "^0.75.0"
+PyJWT = "^2.3.0"
+uvicorn = "^0.17.6"
+passlib = "^1.7.4"
 
 [tool.poetry.dev-dependencies]
 

@@ -1,5 +1,5 @@
 import pytest
-from database.service import insert_values, select_values, delete_values, get_values
+from database.service import insert_values, select_values, delete_values
 
 
 def test_database_values():
