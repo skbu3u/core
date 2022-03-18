@@ -13,6 +13,7 @@ fastapi = "^0.75.0"
 PyJWT = "^2.3.0"
 uvicorn = "^0.17.6"
 passlib = "^1.7.4"
+bcrypt = "^3.2.0"
 
 [tool.poetry.dev-dependencies]
 
