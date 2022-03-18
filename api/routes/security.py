@@ -10,7 +10,7 @@ users_base = []
 
 
 @security_route.post('/register', status_code=201)
-async def register(user: User):
+async def register_new_user(user: User):
     if connection.execute(users.select().where(users.c.name == user.username)).fetchall():
         raise HTTPException(status_code=400, detail=f'Username {user.username} is taken')
     hashed_password = auth_handler.get_password_hash(user.password)
