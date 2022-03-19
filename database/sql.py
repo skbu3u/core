@@ -17,3 +17,15 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 connection = engine.connect()
+
+
+def get_db():
+    session = SessionLocal()
+    try:
+        yield session
+        session.commit()
+    finally:
+        session.close()
+
+
+Base.metadata.create_all(bind=engine)

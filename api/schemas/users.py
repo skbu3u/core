@@ -3,32 +3,32 @@ from fastapi import Query
 from pydantic import BaseModel, validator
 
 
-class User(BaseModel):
-    username: str = Query(...,
-                          title='Enter name',
-                          description='Input can contain latin letters and numbers',
-                          min_length=3,
-                          max_length=16,
-                          strip_whitespace=True)
+class UserCreate(BaseModel):
+    name: str = Query(...,
+                      title='Enter name',
+                      description='Input can contain latin letters and numbers',
+                      max_length=16,
+                      min_length=3,
+                      strip_whitespace=True)
 
-    @validator('username')
-    def name_match(cls, username):
-        if not re.match(r'^[\w.-]+$', username):
-            raise ValueError(f"Name '{username}' is incorrect")
-        return username
+    @validator('name')
+    def name_match(cls, name):
+        if not re.match(r'^[\w.-]+$', name):
+            raise ValueError(f"Name '{name}' is incorrect")
+        return name
 
     email: str = Query(...,
                        title='Enter email',
                        description='Input can contain latin letters and numbers',
-                       min_length=5,
                        max_length=30,
+                       min_length=5,
                        strip_whitespace=True)
 
     @validator('email')
     def email_match(cls, email):
         if not re.match(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', email):
             raise ValueError(f"Email '{email}' is incorrect")
-        return  email
+        return email
 
     password: str = Query(...,
                           title='Enter password',
@@ -38,10 +38,14 @@ class User(BaseModel):
 
     @validator('password')
     def password_match(cls, password):
-        if not re.match(r'^[\w.!@#$%^&+=-]+$', password):
+        if not re.match(r'^[\w.!@#$%^&/+=-]+$', password):
             raise ValueError(f"Password '{password}' is incorrect")
         return password
 
 
-class Role(User):
-    is_admin: bool
+class User(UserCreate):
+    id: int
+    is_admin: bool = False
+
+    class Config:
+        orm_mode = True

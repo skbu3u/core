@@ -2,8 +2,8 @@ from sqlalchemy import Column, String, Integer, Boolean
 from database.sql import Base
 
 
-class Users(Base):
-    __tablename__ = "Users"
+class UserModel(Base):
+    __tablename__ = 'users'
     id = Column(Integer, primary_key=True, index=True, unique=True)
     name = Column(String, unique=True)
     email = Column(String, unique=True)
@@ -11,4 +11,4 @@ class Users(Base):
     is_admin = Column(Boolean, default=False)
 
 
-users = Users.__table__
+users = UserModel.__table__
