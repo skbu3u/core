@@ -7,4 +7,4 @@ from exceptions.ClassInitializationError import ClassInitializationError
 if Base and Users and Equipment:
     pass
 else:
-    raise ClassInitializationError('Need add Base or Equipment')
+    raise ClassInitializationError('Need add Base, Users or Equipment')

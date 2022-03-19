@@ -1,11 +1,10 @@
 import re
 from fastapi import Query
-from typing import Optional
 from pydantic import BaseModel, validator
 
 
 class User(BaseModel):
-    username: str = Query(None,
+    username: str = Query(...,
                           title='Enter name',
                           description='Input can contain latin letters and numbers',
                           min_length=3,
@@ -16,8 +15,9 @@ class User(BaseModel):
     def name_match(cls, username):
         if not re.match(r'^[\w.-]+$', username):
             raise ValueError(f"Name '{username}' is incorrect")
+        return username
 
-    email: str = Query(None,
+    email: str = Query(...,
                        title='Enter email',
                        description='Input can contain latin letters and numbers',
                        min_length=5,
@@ -28,8 +28,9 @@ class User(BaseModel):
     def email_match(cls, email):
         if not re.match(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', email):
             raise ValueError(f"Email '{email}' is incorrect")
+        return  email
 
-    password: str = Query(None,
+    password: str = Query(...,
                           title='Enter password',
                           description='Input can contain latin letters, numbers and special characters',
                           min_length=5,
@@ -39,7 +40,8 @@ class User(BaseModel):
     def password_match(cls, password):
         if not re.match(r'^[\w.!@#$%^&+=-]+$', password):
             raise ValueError(f"Password '{password}' is incorrect")
+        return password
 
 
-class Rights(User):
-    role: Optional[bool] = None
+class Role(User):
+    is_admin: bool
