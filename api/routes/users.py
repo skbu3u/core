@@ -4,7 +4,7 @@ from database.models.users import UserModel
 from database.sql import get_db
 
 
-users_route = SQLAlchemyCRUDRouter(
+route = SQLAlchemyCRUDRouter(
     schema=User,
     create_schema=UserCreate,
     db_model=UserModel,

@@ -1,5 +1,5 @@
 from database.sql import connection
-from database.models.equipment import db
+from database.models.equipments import db
 
 
 def insert_values(name, price):

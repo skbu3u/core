@@ -16,7 +16,7 @@ engine = create_engine(
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
-connection = engine.connect()
+Base.metadata.create_all(bind=engine)
 
 
 def get_db():
@@ -26,6 +26,3 @@ def get_db():
         session.commit()
     finally:
         session.close()
-
-
-Base.metadata.create_all(bind=engine)

@@ -10,5 +10,3 @@ class UserModel(Base):
     password = Column(String)
     is_admin = Column(Boolean, default=False)
 
-
-users = UserModel.__table__

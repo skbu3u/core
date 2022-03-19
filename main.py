@@ -1,7 +1,6 @@
 import uvicorn
 from fastapi import FastAPI, APIRouter
-from api.routes.security import security_route
-from api.routes.users import users_route
+from api.routes import security, users, equipments, parts
 
 
 app = FastAPI()
@@ -13,8 +12,10 @@ def welcome_page():
     return {'msg': 'Hi from backend!'}
 
 
-routes.include_router(security_route, prefix='/security', tags=['security'])
-routes.include_router(users_route)
+routes.include_router(security.route, prefix='/security', tags=['Security'])
+routes.include_router(users.route)
+routes.include_router(equipments.route)
+routes.include_router(parts.route)
 
 app.include_router(routes)
 
