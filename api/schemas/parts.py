@@ -16,7 +16,7 @@ class Part(PartCreate):
 
 
 class PartUpdate(Part):
-    parts: Union[Part, Dict] = []
+    parts: Optional[Union[Part, Dict]] = []
 
     class Config:
         orm_mode = True

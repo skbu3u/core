@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from api.schemas.parts import Part
+from typing import Optional, List
 
 
 class EquipmentCreate(BaseModel):
@@ -8,7 +9,7 @@ class EquipmentCreate(BaseModel):
 
 class Equipment(EquipmentCreate):
     id: int
-    parts: list[Part] = []
+    parts: Optional[List[Part]] = []
 
     class Config:
         orm_mode = True
