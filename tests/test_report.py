@@ -1,5 +1,7 @@
 import pytest
-from classes.Report import *
+from classes.Report import Report
+from classes.Equipment import Equipment
+from exceptions.ClassInitializationError import ClassInitializationError
 
 
 def test_init_report():

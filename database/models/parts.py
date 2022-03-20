@@ -7,5 +7,6 @@ class PartModel(Base):
     id = Column(Integer, primary_key=True, index=True, unique=True)
     name = Column(String, unique=True)
     price = Column(Integer)
-    compatibility = Column(String)
-    parts = Column(JSON)
+    compatibility = Column(JSON, default=[])
+    parts = Column(JSON, default=[])
+

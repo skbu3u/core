@@ -1,5 +1,6 @@
 import pytest
-from classes.SparePart import *
+from classes.SparePart import SparePart
+from exceptions.ClassInitializationError import ClassInitializationError
 
 
 def test_init_spare_part():
