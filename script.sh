@@ -3,7 +3,11 @@
 clear
 
 echo "update core"
+git reset --hard
 git pull
+
+echo "check dependencies"
+python3 -m poetry update
 
 echo "check database"
 FILE=/src/database/sqlite.db
@@ -13,9 +17,6 @@ else
   python3 -m alembic revision --autogenerate 'Initial'
   python3 -m alembic upgrade head
 fi
-
-echo "check dependencies"
-python3 -m poetry install
 
 echo "run server"
 # shellcheck disable=SC2164
