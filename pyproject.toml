@@ -15,6 +15,7 @@ uvicorn = "^0.17.6"
 passlib = "^1.7.4"
 bcrypt = "^3.2.0"
 fastapi-crudrouter = "^0.8.5"
+python-dotenv = "^0.19.2"
 
 [tool.poetry.dev-dependencies]
 
