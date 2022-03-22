@@ -2,13 +2,13 @@
 # sudo chmod +x script.sh
 clear
 
-echo "==> Update core"
+echo "==> Update core from Git"
 git pull
 
-echo "==> Check dependencies"
+echo "==> Check and update dependencies"
 python3 -m poetry update
 
-echo "==> Check database"
+echo "==> Check database and migrations"
 FILE="./src/database/sqlite.db"
 if test -f "$FILE"; then
   echo "$FILE exist"

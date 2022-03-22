@@ -1,25 +1,33 @@
-from fastapi import Depends, HTTPException
-from fastapi_crudrouter import SQLAlchemyCRUDRouter
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from src.api.schemas.parts import PartCreate, Part
-from src.database.models.parts import PartModel
+
+from src.api.schemas.equipments import Equipment
+from src.api.schemas.parts import PartCreate
+from src.database.crud.parts import get_parts, create_equipment_part
 from src.database.sql import get_db
 
+# route = SQLAlchemyCRUDRouter(
+#     schema=Part,
+#     create_schema=PartCreate,
+#     db_model=PartModel,
+#     db=get_db,
+#     prefix='parts',
+#     create_route=False,
+#     delete_all_route=False
+# )
 
-route = SQLAlchemyCRUDRouter(
-    schema=Part,
-    create_schema=PartCreate,
-    db_model=PartModel,
-    db=get_db,
-    prefix='parts',
-    create_route=False,
-    delete_all_route=False
-)
+route = APIRouter()
 
 
-@route.post('/')
-async def create_part(part: PartCreate, db: Session = Depends(get_db)):
-    if db.query(PartModel).filter(PartModel.name == part.name).first():
-        raise HTTPException(status_code=400, detail=f'Part {part.name} already exist')
-    db.add(PartModel(name=part.name, price=part.price, compatibility=part.compatibility))
-    return {'msg': f'Part {part.name} added'}
+@route.get("/parts/", response_model=list[Equipment])
+def get_all_parts(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    parts = get_parts(db, skip=skip, limit=limit)
+    return parts
+
+
+@route.post("/equipments/{compatibility}/parts/", response_model=Equipment)
+def create_part_for_equipment(
+    compatibility: str, part: PartCreate, db: Session = Depends(get_db)
+):
+    compatibility = ", ".join(compatibility.replace(',', ' ').strip().lower().title().split())
+    return create_equipment_part(db=db, part=part, compatibility=compatibility)

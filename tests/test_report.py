@@ -1,7 +1,8 @@
 import pytest
-from src.classes.Report import Report
+
 from src.classes.Equipment import Equipment
-from src.exceptions.ClassInitializationError import ClassInitializationError
+from src.classes.Report import Report
+from src.exceptions import ClassInitializationError
 
 
 def test_init_report():

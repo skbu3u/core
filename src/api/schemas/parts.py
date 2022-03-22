@@ -1,22 +1,27 @@
-from pydantic import BaseModel
-from typing import Optional, List, Union, Dict
+import re
+
+from pydantic import BaseModel, validator
+
+from src.api.schemas.consumables import Consumable
 
 
-class PartCreate(BaseModel):
+class PartBase(BaseModel):
     name: str
     price: int
-    compatibility: Optional[List[str]] = []
 
 
-class Part(PartCreate):
+class PartCreate(PartBase):
+    @validator('name')
+    def name_match(cls, name):
+        if re.match(r'^[а-яА-Я.,!@#$%^&/+=]+$', name):
+            raise ValueError(f"Name '{name}' is incorrect")
+        return name.lower().title()
+
+
+class Part(PartBase):
     id: int
-
-    class Config:
-        orm_mode = True
-
-
-class PartUpdate(Part):
-    parts: Optional[Union[Part, Dict]] = []
+    compatibility: str
+    consumables: list[Consumable] = []
 
     class Config:
         orm_mode = True

@@ -2,14 +2,13 @@ import re
 
 from pydantic import BaseModel, validator
 
-from src.api.schemas.parts import Part
 
-
-class EquipmentBase(BaseModel):
+class ConsumableBase(BaseModel):
     name: str
+    price: int
 
 
-class EquipmentCreate(EquipmentBase):
+class ConsumableCreate(ConsumableBase):
     @validator('name')
     def name_match(cls, name):
         if re.match(r'^[а-яА-Я.,!@#$%^&/+=]+$', name):
@@ -17,9 +16,9 @@ class EquipmentCreate(EquipmentBase):
         return name.lower().title()
 
 
-class Equipment(EquipmentBase):
+class Consumable(ConsumableBase):
     id: int
-    parts: list[Part] = []
+    compatibility: str
 
     class Config:
         orm_mode = True

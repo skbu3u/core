@@ -1,4 +1,5 @@
 import re
+
 from fastapi import Query
 from pydantic import BaseModel, validator
 
