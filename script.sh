@@ -3,7 +3,6 @@
 clear
 
 echo "==> Update core"
-git reset --hard
 git pull
 
 echo "==> Check dependencies"
