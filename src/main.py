@@ -5,15 +5,13 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 
-from api.routes import security, users, equipments, parts
+from src.api.routes import equipments, users, security, parts
 
-
-app = FastAPI()
-routes = APIRouter()
 load_dotenv()
 host = os.getenv('host')
-port = os.getenv('port')
-
+port = int(os.getenv('port'))
+routes = APIRouter()
+app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -37,4 +35,4 @@ app.include_router(routes)
 
 
 if __name__ == '__main__':
-    uvicorn.run('main:app', host=host, port=port, reload=True)
+    uvicorn.run('main:app', host=host, port=port, reload=True, log_level="info")

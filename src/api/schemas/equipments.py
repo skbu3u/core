@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from api.schemas.parts import Part
+from src.api.schemas.parts import Part
 from typing import Optional, List
 
 

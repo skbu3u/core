@@ -1,9 +1,9 @@
 from fastapi import Depends, HTTPException
 from fastapi_crudrouter import SQLAlchemyCRUDRouter
 from sqlalchemy.orm import Session
-from api.schemas.parts import PartCreate, Part
-from database.models.parts import PartModel
-from database.sql import get_db
+from src.api.schemas.parts import PartCreate, Part
+from src.database.models.parts import PartModel
+from src.database.sql import get_db
 
 
 route = SQLAlchemyCRUDRouter(

@@ -1,6 +1,6 @@
-from classes.SparePart import SparePart
-from classes.Equipment import Equipment
-from classes.Report import Report
+from src.classes.SparePart import SparePart
+from src.classes.Equipment import Equipment
+from src.classes.Report import Report
 
 part_1 = SparePart('Картридж', 10)
 part_1_1 = SparePart('Тонер', 3)

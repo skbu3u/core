@@ -1,5 +1,5 @@
 from sqlalchemy import Column, String, Integer, JSON
-from database.sql import Base
+from src.database.sql import Base
 
 
 class EquipmentModel(Base):

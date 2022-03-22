@@ -1,5 +1,5 @@
-from classes.Equipment import Equipment
-from exceptions.ClassInitializationError import ClassInitializationError
+from src.classes.Equipment import Equipment
+from src.exceptions.ClassInitializationError import ClassInitializationError
 
 
 class Report:

@@ -1,24 +1,24 @@
-from classes.SparePart import SparePart
-from exceptions.ClassInitializationError import ClassInitializationError
+from src.exceptions.ClassInitializationError import ClassInitializationError
 
 
-class Equipment:
+class SparePart:
 
-    def __init__(self, name):
+    def __init__(self, name, price):
         self.__parts = {}
         self.__included_parts = []
-        if isinstance(name, str):
+        if isinstance(name, str) and isinstance(price, int):
             self.__name = name
+            self.__price = price
         else:
             raise ClassInitializationError('Name must be string and price must be integer')
 
+    def __repr__(self):
+        return "{'%s': {'Price': %s, 'Included_parts': []}}" % (self.__name, self.__price)
+
     def add_part(self, part):
         if isinstance(part, SparePart):
-            if part.get_parts:
-                self.__included_parts.append(part.get_parts)
-            else:
-                self.__included_parts.append(part)
-            self.__parts = {self.__name: {'Included_parts': self.__included_parts}}
+            self.__included_parts.append(part)
+            self.__parts = {self.__name: {'Price': self.__price, 'Included_parts': self.__included_parts}}
         else:
             raise ClassInitializationError('Part must be SparePart class')
 

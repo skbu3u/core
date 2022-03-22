@@ -1,7 +1,7 @@
 from fastapi_crudrouter import SQLAlchemyCRUDRouter
-from api.schemas.users import User, UserCreate
-from database.models.users import UserModel
-from database.sql import get_db
+from src.api.schemas.users import User, UserCreate
+from src.database.models.users import UserModel
+from src.database.sql import get_db
 
 
 route = SQLAlchemyCRUDRouter(
