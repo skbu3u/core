@@ -13,7 +13,7 @@ FILE="./src/database/sqlite.db"
 if test -f "$FILE"; then
   echo "$FILE exist"
 else
-  python3 -m alembic revision --autogenerate 'Initial'
+  python3 -m alembic revision --autogenerate -m 'Initial'
   python3 -m alembic upgrade head
 fi
 
