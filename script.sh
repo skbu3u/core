@@ -2,14 +2,14 @@
 # sudo chmod +x script.sh
 clear
 
-echo "update core"
+echo "==> Update core"
 git reset --hard
 git pull
 
-echo "check dependencies"
+echo "==> Check dependencies"
 python3 -m poetry update
 
-echo "check database"
+echo "==> Check database"
 FILE="./src/database/sqlite.db"
 if test -f "$FILE"; then
   echo "$FILE exist"
@@ -18,14 +18,5 @@ else
   python3 -m alembic upgrade head
 fi
 
-echo "run server"
-FILE="./src/main.py"
-if test -f "$FILE"; then
-  echo "$FILE exist"
-  folder="src"
-  # shellcheck disable=SC2164
-  cd ${folder}
-  python3 main.py
-else
-  echo "Server not found"
-fi
+echo "==> Run server"
+python3 main.py
