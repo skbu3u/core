@@ -20,4 +20,4 @@ python3 -m poetry install
 echo "run server"
 # shellcheck disable=SC2164
 cd src
-pytho3 main.py
+python3 main.py
