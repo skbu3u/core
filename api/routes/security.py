@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from api.authorization import AuthHandler
-from api.schemas.users import UserCreate
+from api.schemas.users import UserCreate, UserLogin
 from database.models.users import UserModel
 from database.sql import get_db
 
@@ -19,10 +19,10 @@ async def register_new_user(user: UserCreate, db: Session = Depends(get_db)):
 
 
 @route.post('/login')
-async def login(user: UserCreate, db: Session = Depends(get_db)):
-    auth = db.query(UserModel).filter(UserModel.name == user.name).first()
+async def login(user: UserLogin, db: Session = Depends(get_db)):
+    auth = db.query(UserModel).filter(UserModel.email == user.email).first()
     if auth and auth_handler.verify_password(user.password, auth.password):
-        token = auth_handler.encode_token(user.name)
+        token = auth_handler.encode_token(user.email)
         return {'token': token}
     raise HTTPException(status_code=401, detail='Invalid username and/or password')
 
