@@ -10,7 +10,7 @@ echo "check dependencies"
 python3 -m poetry update
 
 echo "check database"
-FILE=/src/database/sqlite.db
+FILE="./src/database/sqlite.db"
 if test -f "$FILE"; then
   echo "$FILE exist"
 else
@@ -19,6 +19,13 @@ else
 fi
 
 echo "run server"
-# shellcheck disable=SC2164
-cd src
-python3 main.py
+FILE="./src/main.py"
+if test -f "$FILE"; then
+  echo "$FILE exist"
+  folder="src"
+  # shellcheck disable=SC2164
+  cd ${folder}
+  python3 main.py
+else
+  echo "Server not found"
+fi

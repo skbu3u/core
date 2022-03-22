@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.routes import equipments, users, security, parts
+from api.routes import equipments, users, security, parts
 
 load_dotenv()
 host = os.getenv('host')
