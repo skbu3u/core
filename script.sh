@@ -3,6 +3,7 @@
 clear
 
 echo "==> Update core from Git"
+git fetch
 git pull
 
 echo "==> Check and update dependencies"
