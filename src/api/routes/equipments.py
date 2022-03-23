@@ -5,16 +5,6 @@ from src.api.schemas.equipments import Equipment, EquipmentCreate
 from src.database.crud.equipments import get_equipment_by_name, create_equipment, get_equipments, get_equipment
 from src.database.sql import get_db
 
-# route = SQLAlchemyCRUDRouter(
-#     schema=Equipment,
-#     create_schema=EquipmentCreate,
-#     db_model=EquipmentModel,
-#     db=get_db,
-#     prefix='equipments',
-#     create_route=False,
-#     delete_all_route=False
-# )
-
 route = APIRouter()
 
 

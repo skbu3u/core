@@ -6,16 +6,6 @@ from src.api.schemas.parts import PartCreate
 from src.database.crud.parts import get_parts, create_equipment_part
 from src.database.sql import get_db
 
-# route = SQLAlchemyCRUDRouter(
-#     schema=Part,
-#     create_schema=PartCreate,
-#     db_model=PartModel,
-#     db=get_db,
-#     prefix='parts',
-#     create_route=False,
-#     delete_all_route=False
-# )
-
 route = APIRouter()
 
 
