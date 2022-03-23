@@ -28,9 +28,9 @@ def welcome_page():
 
 routes.include_router(security.route, prefix='/security', tags=['Security'])
 routes.include_router(users.route)
-routes.include_router(equipments.route, prefix='/equipments', tags=['Equipments'])
-routes.include_router(parts.route, prefix='/parts', tags=['Parts'])
-routes.include_router(consumables.route, prefix='/consumables', tags=['Consumables'])
+routes.include_router(equipments.route, tags=['Equipments'])
+routes.include_router(parts.route, tags=['Parts'])
+routes.include_router(consumables.route, tags=['Consumables'])
 
 app.include_router(routes)
 
