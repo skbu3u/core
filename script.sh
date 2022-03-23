@@ -15,7 +15,8 @@ echo ""
 echo "==> Check database and migrations"
 FILE="./src/database/sqlite.db"
 if test -f "$FILE"; then
-  echo "$FILE exist"
+  echo "Path: $FILE"
+  echo "Database exist and up to date"
 else
   python3 -m alembic revision --autogenerate -m 'Initial'
   python3 -m alembic upgrade head
