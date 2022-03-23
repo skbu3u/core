@@ -1,16 +1,16 @@
 #!/bin/bash
 # sudo chmod +x script.sh
 clear
-echo
+echo ""
 
 echo "==> Update core from Git"
 git fetch
 git pull
-echo
+echo ""
 
 echo "==> Check and update dependencies"
 python3 -m poetry update
-echo
+echo ""
 
 echo "==> Check database and migrations"
 FILE="./src/database/sqlite.db"
@@ -20,7 +20,7 @@ else
   python3 -m alembic revision --autogenerate -m 'Initial'
   python3 -m alembic upgrade head
 fi
-echo
+echo ""
 
 echo "==> Run server"
 python3 main.py
