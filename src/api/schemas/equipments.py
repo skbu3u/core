@@ -1,4 +1,5 @@
 import re
+from typing import List
 
 from pydantic import BaseModel, validator
 
@@ -19,7 +20,7 @@ class EquipmentCreate(EquipmentBase):
 
 class Equipment(EquipmentBase):
     id: int
-    parts: list[Part] = []
+    parts: List[Part] = []
 
     class Config:
         orm_mode = True
