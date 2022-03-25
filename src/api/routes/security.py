@@ -21,10 +21,15 @@ async def register_new_user(user: UserCreate, db: Session = Depends(get_db)):
 
 @route.post('/login')
 async def login(user: UserLogin, db: Session = Depends(get_db)):
-    auth = db.query(UserModel).filter(UserModel.email == user.email).first()
-    if auth and auth_handler.verify_password(user.password, auth.password):
+    db_user = db.query(UserModel).filter(UserModel.email == user.email).first()
+    if db_user and auth_handler.verify_password(user.password, db_user.password):
         token = auth_handler.encode_token(user.email)
-        return {'token': token}
+        return {
+            'id': db_user.id,
+            'name': db_user.name,
+            'email': db_user.email,
+            'token': token
+        }
     raise HTTPException(status_code=401, detail='Invalid username and/or password')
 
 
