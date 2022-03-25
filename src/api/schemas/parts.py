@@ -1,4 +1,5 @@
 import re
+from typing import Optional
 
 from pydantic import BaseModel, validator
 
@@ -21,7 +22,7 @@ class PartCreate(PartBase):
 class Part(PartBase):
     id: int
     compatibility: str
-    consumables: list[Consumable] = []
+    consumables: Optional[list[Consumable]] = []
 
     class Config:
         orm_mode = True
