@@ -1,9 +1,5 @@
 import re
-<<<<<<< HEAD
-from typing import Optional, List
-=======
 from typing import List
->>>>>>> routes
 
 from pydantic import BaseModel, validator
 
