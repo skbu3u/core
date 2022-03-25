@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
@@ -17,7 +19,7 @@ def create_equipments(equipment: EquipmentCreate, db: Session = Depends(get_db))
     return equipments
 
 
-@route.get("/equipments/", response_model=list[Equipment])
+@route.get("/equipments/", response_model=List[Equipment])
 def get_all_equipments(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     equipments = get_equipments(db, skip=skip, limit=limit)
     return equipments

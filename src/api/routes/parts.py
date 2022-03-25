@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
@@ -9,7 +11,7 @@ from src.database.sql import get_db
 route = APIRouter()
 
 
-@route.get("/parts/", response_model=list[Equipment])
+@route.get("/parts/", response_model=List[Equipment])
 def get_all_parts(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     parts = get_parts(db, skip=skip, limit=limit)
     return parts
