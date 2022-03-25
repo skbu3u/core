@@ -6,6 +6,7 @@ authors = ["Divider"]
 
 [tool.poetry.dependencies]
 python = ">=3.8"
+poetry = "^1.1.13"
 pytest = "^7.0.1"
 SQLAlchemy = "^1.4.32"
 alembic = "^1.7.6"

@@ -5,7 +5,8 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.routes import security, users, equipments, parts, consumables
+from src.api import security
+from src.api.routes import users, equipments, parts, consumables
 
 load_dotenv()
 host = os.getenv('HOST')
@@ -27,10 +28,10 @@ def welcome_page():
 
 
 routes.include_router(security.route, prefix='/security', tags=['Security'])
-routes.include_router(users.route)
-routes.include_router(equipments.route, tags=['Equipments'])
-routes.include_router(parts.route, tags=['Parts'])
-routes.include_router(consumables.route, tags=['Consumables'])
+routes.include_router(users)
+routes.include_router(equipments)
+routes.include_router(parts)
+routes.include_router(consumables)
 
 app.include_router(routes)
 
