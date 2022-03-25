@@ -8,7 +8,7 @@ class ConsumableBase(BaseModel):
 
     @validator('name')
     def name_match(cls, name):
-        if not re.match(r'^[\w.-]+$', name):
+        if not re.match(r'^[\w\s.-]+$', name):
             raise ValueError(f"Name '{name}' is incorrect")
         return name.lower().title()
 
