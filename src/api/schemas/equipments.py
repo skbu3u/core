@@ -17,11 +17,7 @@ class EquipmentBase(BaseModel):
 
 
 class EquipmentCreate(EquipmentBase):
-    @validator('name')
-    def name_match(cls, name):
-        if re.match(r'^[а-яА-Я.,!@#$%^&/+=]+$', name):
-            raise ValueError(f"Name '{name}' is incorrect")
-        return name.lower().title()
+    pass
 
 
 class Equipment(EquipmentBase):

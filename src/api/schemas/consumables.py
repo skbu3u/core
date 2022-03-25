@@ -16,11 +16,7 @@ class ConsumableBase(BaseModel):
 
 
 class ConsumableCreate(ConsumableBase):
-    @validator('name')
-    def name_match(cls, name):
-        if re.match(r'^[а-яА-Я.,!@#$%^&/+=]+$', name):
-            raise ValueError(f"Name '{name}' is incorrect")
-        return name.lower().title()
+    pass
 
 
 class Consumable(ConsumableBase):
