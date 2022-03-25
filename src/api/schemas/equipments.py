@@ -9,6 +9,12 @@ from src.api.schemas.parts import Part
 class EquipmentBase(BaseModel):
     name: str
 
+    @validator('name')
+    def name_match(cls, name):
+        if not re.match(r'^[\w.-]+$', name):
+            raise ValueError(f"Name '{name}' is incorrect")
+        return name.lower().title()
+
 
 class EquipmentCreate(EquipmentBase):
     @validator('name')

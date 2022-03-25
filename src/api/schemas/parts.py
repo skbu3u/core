@@ -1,5 +1,9 @@
 import re
+<<<<<<< HEAD
 from typing import Optional, List
+=======
+from typing import List
+>>>>>>> routes
 
 from pydantic import BaseModel, validator
 
@@ -8,15 +12,19 @@ from src.api.schemas.consumables import Consumable
 
 class PartBase(BaseModel):
     name: str
+
+    @validator('name')
+    def name_match(cls, name):
+        if not re.match(r'^[\w.-]+$', name):
+            raise ValueError(f"Name '{name}' is incorrect")
+        return name.lower().title()
+
     price: int
+    # TODO Add price validations
 
 
 class PartCreate(PartBase):
-    @validator('name')
-    def name_match(cls, name):
-        if re.match(r'^[а-яА-Я.,!@#$%^&/+=]+$', name):
-            raise ValueError(f"Name '{name}' is incorrect")
-        return name.lower().title()
+    pass
 
 
 class Part(PartBase):
