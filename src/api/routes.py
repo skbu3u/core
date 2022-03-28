@@ -45,23 +45,27 @@ def create_one(equipment: EquipmentCreate, db: Session = Depends(get_db)):
 
 @parts.post("/{compatibility}", response_model=Equipment)
 def create_one(compatibility: str, part: PartCreate, db: Session = Depends(get_db)):
-    db_equipment = db.query(EquipmentModel).filter(EquipmentModel.name == compatibility).first()
     db_part = PartModel(**part.dict(), compatibility=compatibility)
     db.add(db_part)
     db.commit()
     db.refresh(db_part)
-    if db_equipment:
-        db_equipment.parts.append(db_part)
+    compatibility_list = [i.strip() for i in compatibility.split(",")]
+    for compatibility in compatibility_list:
+        db_equipment = db.query(EquipmentModel).filter(EquipmentModel.name == compatibility).first()
+        if db_equipment:
+            db_equipment.parts.append(db_part)
     return db_part
 
 
 @consumables.post("/{compatibility}", response_model=Part)
 def create_one(compatibility: str, consumable: ConsumableCreate, db: Session = Depends(get_db)):
-    db_part = db.query(PartModel).filter(PartModel.name == compatibility).first()
     db_consumable = ConsumableModel(**consumable.dict(), compatibility=compatibility)
     db.add(db_consumable)
     db.commit()
     db.refresh(db_consumable)
-    if db_part:
-        db_part.consumables.append(db_consumable)
+    compatibility_list = [i.strip() for i in compatibility.split(",")]
+    for compatibility in compatibility_list:
+        db_part = db.query(PartModel).filter(PartModel.name == compatibility).first()
+        if db_part:
+            db_part.consumables.append(db_consumable)
     return db_consumable
