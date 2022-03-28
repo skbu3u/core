@@ -13,19 +13,22 @@ class PartBase(BaseModel):
     def name_match(cls, name):
         if not re.match(r'^[\w\s.-]+$', name):
             raise ValueError(f"Name '{name}' is incorrect")
-        return name.lower().title()
+        return name.lower()
 
     price: int
     # TODO Add price validations
 
 
 class PartCreate(PartBase):
-    pass
+    compatibility: str
+
+    @validator('compatibility')
+    def compatibility_match(cls, compatibility):
+        return compatibility.lower()
 
 
 class Part(PartBase):
     id: int
-    compatibility: str
     consumables: List[Consumable] = []
 
     class Config:

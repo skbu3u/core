@@ -31,7 +31,7 @@ parts = add_route(Part, PartCreate, PartModel, 'parts')
 consumables = add_route(Consumable, ConsumableCreate, ConsumableModel, 'consumables')
 
 
-@equipments.post("/", response_model=Equipment)
+@equipments.post("", response_model=Equipment)
 def create_one(equipment: EquipmentCreate, db: Session = Depends(get_db)):
     db_equipment = db.query(EquipmentModel).filter(EquipmentModel.name == equipment.name).first()
     if db_equipment:
@@ -43,13 +43,13 @@ def create_one(equipment: EquipmentCreate, db: Session = Depends(get_db)):
     return db_equipment
 
 
-@parts.post("/{compatibility}", response_model=Equipment)
-def create_one(compatibility: str, part: PartCreate, db: Session = Depends(get_db)):
-    db_part = PartModel(**part.dict(), compatibility=compatibility)
+@parts.post("", response_model=Equipment)
+def create_one(part: PartCreate, db: Session = Depends(get_db)):
+    db_part = PartModel(**part.dict())
     db.add(db_part)
     db.commit()
     db.refresh(db_part)
-    compatibility_list = [i.strip() for i in compatibility.split(",")]
+    compatibility_list = [i.strip().lower() for i in part.compatibility.split(",")]
     for compatibility in compatibility_list:
         db_equipment = db.query(EquipmentModel).filter(EquipmentModel.name == compatibility).first()
         if db_equipment:
@@ -57,13 +57,13 @@ def create_one(compatibility: str, part: PartCreate, db: Session = Depends(get_d
     return db_part
 
 
-@consumables.post("/{compatibility}", response_model=Part)
-def create_one(compatibility: str, consumable: ConsumableCreate, db: Session = Depends(get_db)):
-    db_consumable = ConsumableModel(**consumable.dict(), compatibility=compatibility)
+@consumables.post("", response_model=Part)
+def create_one(consumable: ConsumableCreate, db: Session = Depends(get_db)):
+    db_consumable = ConsumableModel(**consumable.dict())
     db.add(db_consumable)
     db.commit()
     db.refresh(db_consumable)
-    compatibility_list = [i.strip() for i in compatibility.split(",")]
+    compatibility_list = [i.strip().lower() for i in consumable.compatibility.split(",")]
     for compatibility in compatibility_list:
         db_part = db.query(PartModel).filter(PartModel.name == compatibility).first()
         if db_part:

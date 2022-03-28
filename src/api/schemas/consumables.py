@@ -10,18 +10,21 @@ class ConsumableBase(BaseModel):
     def name_match(cls, name):
         if not re.match(r'^[\w\s.-]+$', name):
             raise ValueError(f"Name '{name}' is incorrect")
-        return name.lower().title()
+        return name.lower()
 
     price: int
 
 
 class ConsumableCreate(ConsumableBase):
-    pass
+    compatibility: str
+
+    @validator('compatibility')
+    def compatibility_match(cls, compatibility):
+        return compatibility.lower()
 
 
 class Consumable(ConsumableBase):
     id: int
-    compatibility: str
 
     class Config:
         orm_mode = True
