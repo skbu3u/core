@@ -21,7 +21,7 @@ class ConsumableCreate(ConsumableBase):
 
 class Consumable(ConsumableBase):
     id: int
-    compatibility: int
+    compatibility: str
 
     class Config:
         orm_mode = True

@@ -18,8 +18,6 @@ class EquipmentModel(Base):
 
     id = Column(Integer, primary_key=True, index=True, unique=True)
     name = Column(String, unique=True)
-
-    # parts = relationship("PartModel", back_populates="equipments")
     parts = relationship("PartModel",
                          secondary="equipment_part",
                          backref="equipments")
@@ -37,11 +35,16 @@ class PartModel(Base):
     id = Column(Integer, primary_key=True, index=True, unique=True)
     name = Column(String, unique=True)
     price = Column(Integer)
-
-    # compatibility = Column(Integer, ForeignKey("equipments.id"))
-    # equipments = relationship("EquipmentModel", back_populates="parts")
-    # consumables = relationship("ConsumableModel", back_populates="parts")
     compatibility = Column(String)
+    consumables = relationship("ConsumableModel",
+                               secondary="part_consumable",
+                               backref="parts")
+
+
+part_consumable = Table('part_consumable', Base.metadata,
+                        Column('parts_id', ForeignKey('parts.id'), primary_key=True),
+                        Column('consumables_id', ForeignKey('consumables.id'), primary_key=True)
+                        )
 
 
 class ConsumableModel(Base):
@@ -50,7 +53,4 @@ class ConsumableModel(Base):
     id = Column(Integer, primary_key=True, index=True, unique=True)
     name = Column(String, unique=True)
     price = Column(Integer)
-
-    # compatibility = Column(Integer, ForeignKey("parts.id"))
-    # parts = relationship("PartModel", back_populates="consumables")
     compatibility = Column(String)
