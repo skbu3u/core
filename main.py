@@ -22,7 +22,7 @@ app.add_middleware(
 )
 
 
-@app.get('/')
+@app.get("/")
 def welcome_page():
     return {'msg': 'Hi from backend!'}
 
