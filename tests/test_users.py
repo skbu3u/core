@@ -20,4 +20,3 @@ def test_delete_user():
     response = client.delete("/users")
     assert response.status_code == 200
     assert response.json() == []
-    
