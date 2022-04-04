@@ -1,10 +1,12 @@
 from fastapi.testclient import TestClient
 
 from main import app
+from tests.conftest import temp_database, drop_temp_database
 
 client = TestClient(app)
 
 
+@temp_database
 def test_create_equipment():
     response = client.post("/equipments", json={
         "id": 1,
@@ -17,6 +19,7 @@ def test_create_equipment():
     }
 
 
+@temp_database
 def test_create_part():
     response = client.post("/parts", json={
         "id": 1,
@@ -31,6 +34,7 @@ def test_create_part():
     }
 
 
+@temp_database
 def test_create_consumable():
     response = client.post("/consumables", json={
         "id": 1,
@@ -46,6 +50,7 @@ def test_create_consumable():
     }
 
 
+@temp_database
 def test_read_equipment_with_part_and_consumable():
     response = client.get("/equipments")
     assert response.status_code == 200
@@ -71,19 +76,26 @@ def test_read_equipment_with_part_and_consumable():
     ]
 
 
+@temp_database
 def test_delete_equipment():
     response = client.delete("/equipments")
     assert response.status_code == 200
     assert response.json() == []
 
 
+@temp_database
 def test_delete_part():
     response = client.delete("/parts")
     assert response.status_code == 200
     assert response.json() == []
 
 
+@temp_database
 def test_delete_consumable():
     response = client.delete("/consumables")
     assert response.status_code == 200
     assert response.json() == []
+
+
+def test_existing_temp_database():
+    drop_temp_database()
