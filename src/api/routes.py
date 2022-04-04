@@ -1,4 +1,4 @@
-from fastapi import Depends, HTTPException
+from fastapi import Depends
 from fastapi_crudrouter import SQLAlchemyCRUDRouter
 from sqlalchemy.orm import Session
 
@@ -10,6 +10,7 @@ from src.database.models import ConsumableModel
 from src.database.models import EquipmentModel
 from src.database.models import PartModel
 from src.database.models import UserModel
+from src.database.service import check_exist_in_db, add_to_db, check_compatibility
 from src.database.sql import get_db
 
 
@@ -33,48 +34,26 @@ consumables = add_route(Consumable, ConsumableCreate, ConsumableModel, 'consumab
 
 @equipments.post("", response_model=Equipment)
 def create_one(equipment: EquipmentCreate, db: Session = Depends(get_db)):
-    db_equipment = db.query(EquipmentModel).filter(EquipmentModel.name == equipment.name).first()
-    if db_equipment:
-        raise HTTPException(status_code=400, detail=f"{equipment.name} already exist")
-    db_equipment = EquipmentModel(name=equipment.name)
-    if isinstance(db_equipment, EquipmentModel):
-        db.add(db_equipment)
-        db.commit()
-        db.refresh(db_equipment)
-    return db_equipment
+    check_exist_in_db(db=db, schema=equipment, model=EquipmentModel)
+    new_equipment = EquipmentModel(name=equipment.name)
+    add_to_db(db=db, model=EquipmentModel, new_model=new_equipment)
+    return new_equipment
 
 
 @parts.post("", response_model=Equipment)
 def create_one(part: PartCreate, db: Session = Depends(get_db)):
-    db_part = db.query(PartModel).filter(PartModel.name == part.name).first()
-    if db_part:
-        raise HTTPException(status_code=400, detail=f"{part.name} already exist")
-    db_part = PartModel(**part.dict())
-    if isinstance(db_part, PartModel):
-        db.add(db_part)
-        db.commit()
-        db.refresh(db_part)
-    compatibility_list = [i.strip().lower() for i in part.compatibility.split(",")]
-    for compatibility in compatibility_list:
-        db_equipment = db.query(EquipmentModel).filter(EquipmentModel.name == compatibility).first()
-        if db_equipment:
-            db_equipment.parts.append(db_part)
-    return db_part
+    check_exist_in_db(db=db, schema=part, model=PartModel)
+    new_part = PartModel(**part.dict())
+    add_to_db(db=db, model=PartModel, new_model=new_part)
+    check_compatibility(db=db, schema=part, model=PartModel, new_model=new_part)
+    return new_part
 
 
 @consumables.post("", response_model=Part)
 def create_one(consumable: ConsumableCreate, db: Session = Depends(get_db)):
-    db_consumable = db.query(ConsumableModel).filter(ConsumableModel.name == consumable.name).first()
-    if db_consumable:
-        raise HTTPException(status_code=400, detail=f"{consumable.name} already exist")
-    db_consumable = ConsumableModel(**consumable.dict())
-    if isinstance(db_consumable, ConsumableModel):
-        db.add(db_consumable)
-        db.commit()
-        db.refresh(db_consumable)
-    compatibility_list = [i.strip().lower() for i in consumable.compatibility.split(",")]
-    for compatibility in compatibility_list:
-        db_part = db.query(PartModel).filter(PartModel.name == compatibility).first()
-        if db_part:
-            db_part.consumables.append(db_consumable)
-    return db_consumable
+    check_exist_in_db(db=db, schema=consumable, model=ConsumableModel)
+    new_consumable = ConsumableModel(**consumable.dict())
+    add_to_db(db=db, model=ConsumableModel, new_model=new_consumable)
+    check_compatibility(db=db, schema=consumable, model=ConsumableModel, new_model=new_consumable)
+    return new_consumable
+

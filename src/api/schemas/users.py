@@ -5,12 +5,7 @@ from pydantic import BaseModel, validator
 
 
 class UserCreate(BaseModel):
-    name: str = Query(...,
-                      title='Enter name',
-                      description='Input can contain latin letters and numbers',
-                      max_length=16,
-                      min_length=3,
-                      strip_whitespace=True)
+    name: str
 
     @validator('name')
     def name_match(cls, name):
@@ -18,12 +13,7 @@ class UserCreate(BaseModel):
             raise ValueError(f"Name '{name}' is incorrect")
         return name
 
-    email: str = Query(...,
-                       title='Enter email',
-                       description='Input can contain latin letters and numbers',
-                       max_length=30,
-                       min_length=5,
-                       strip_whitespace=True)
+    email: str
 
     @validator('email')
     def email_match(cls, email):
@@ -31,11 +21,7 @@ class UserCreate(BaseModel):
             raise ValueError(f"Email '{email}' is incorrect")
         return email
 
-    password: str = Query(...,
-                          title='Enter password',
-                          description='Input can contain latin letters, numbers and special characters',
-                          min_length=5,
-                          strip_whitespace=True)
+    password: str
 
     @validator('password')
     def password_match(cls, password):
