@@ -15,7 +15,7 @@ def test_create_equipment():
     assert response.json() == {
         "id": 1,
         "name": "test_equipment",
-        "parts": []
+        "contains": []
     }
 
 

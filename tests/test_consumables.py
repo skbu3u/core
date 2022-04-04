@@ -18,7 +18,7 @@ def test_create_consumable():
         "id": 1,
         "name": "test_consumable",
         "price": 0,
-        "consumables": []
+        "contains": []
     }
 
 

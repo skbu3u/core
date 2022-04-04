@@ -27,12 +27,12 @@ def test_read_equipment_with_part_and_consumable():
         {
             "name": "test_equipment",
             "id": 1,
-            "parts": [
+            "contains": [
                 {
                     "name": "test_part",
                     "price": 0,
                     "id": 1,
-                    "consumables": [
+                    "contains": [
                         {
                             "name": "test_consumable",
                             "price": 0,

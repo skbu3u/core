@@ -18,9 +18,9 @@ class EquipmentModel(Base):
 
     id = Column(Integer, primary_key=True, index=True, unique=True)
     name = Column(String, unique=True)
-    parts = relationship("PartModel",
-                         secondary="equipment_part",
-                         backref="equipments")
+    contains = relationship("PartModel",
+                            secondary="equipment_part",
+                            backref="equipments")
 
 
 equipment_part = Table('equipment_part', Base.metadata,
@@ -36,9 +36,9 @@ class PartModel(Base):
     name = Column(String, unique=True)
     price = Column(Integer)
     compatibility = Column(String)
-    consumables = relationship("ConsumableModel",
-                               secondary="part_consumable",
-                               backref="parts")
+    contains = relationship("ConsumableModel",
+                            secondary="part_consumable",
+                            backref="parts")
 
 
 part_consumable = Table('part_consumable', Base.metadata,

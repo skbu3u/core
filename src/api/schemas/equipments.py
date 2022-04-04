@@ -22,7 +22,7 @@ class EquipmentCreate(EquipmentBase):
 
 class Equipment(EquipmentBase):
     id: int
-    parts: List[Part] = []
+    contains: List[Part] = []
 
     class Config:
         orm_mode = True

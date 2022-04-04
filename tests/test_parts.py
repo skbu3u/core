@@ -17,7 +17,7 @@ def test_create_part():
     assert response.json() == {
         "id": 1,
         "name": "test_part",
-        "parts": []
+        "contains": []
     }
 
 

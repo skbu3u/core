@@ -45,7 +45,7 @@ def create_one(part: PartCreate, db: Session = Depends(get_db)):
     check_exist_in_db(db=db, schema=part, model=PartModel)
     new_part = PartModel(**part.dict())
     add_to_db(db=db, model=PartModel, new_model=new_part)
-    check_compatibility(db=db, schema=part, model=PartModel, new_model=new_part)
+    check_compatibility(db=db, schema=part, model=EquipmentModel, new_model=new_part)
     return new_part
 
 
@@ -54,6 +54,6 @@ def create_one(consumable: ConsumableCreate, db: Session = Depends(get_db)):
     check_exist_in_db(db=db, schema=consumable, model=ConsumableModel)
     new_consumable = ConsumableModel(**consumable.dict())
     add_to_db(db=db, model=ConsumableModel, new_model=new_consumable)
-    check_compatibility(db=db, schema=consumable, model=ConsumableModel, new_model=new_consumable)
+    check_compatibility(db=db, schema=consumable, model=PartModel, new_model=new_consumable)
     return new_consumable
 

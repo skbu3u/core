@@ -29,7 +29,7 @@ class PartCreate(PartBase):
 
 class Part(PartBase):
     id: int
-    consumables: List[Consumable] = []
+    contains: List[Consumable] = []
 
     class Config:
         orm_mode = True
