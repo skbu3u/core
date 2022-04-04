@@ -8,9 +8,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.api import security
 from src.api.routes import users, equipments, parts, consumables
 
-load_dotenv()
-host = os.getenv('HOST')
-port = int(os.getenv('PORT'))
+try:
+    load_dotenv()
+    host = os.getenv('HOST')
+    port = int(os.getenv('PORT'))
+except Exception as ex:
+    print(f"Can't load dotenv: {ex}")
+    host = '127.0.0.1'
+    port = 8000
+
 routes = APIRouter()
 app = FastAPI()
 app.add_middleware(
@@ -37,8 +43,4 @@ app.include_router(routes)
 
 
 if __name__ == '__main__':
-    if host and port:
-        uvicorn.run('main:app', host=host, port=port, reload=True, log_level="info")
-    else:
-        uvicorn.run('main:app', reload=True, log_level="info")
-        
+    uvicorn.run('main:app', host=host, port=port, reload=True, log_level="info")
