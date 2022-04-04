@@ -17,7 +17,6 @@ passlib = "^1.7.4"
 bcrypt = "^3.2.0"
 fastapi-crudrouter = "^0.8.5"
 python-dotenv = "^0.19.2"
-flake8 = "^4.0.1"
 
 [tool.poetry.dev-dependencies]
 
