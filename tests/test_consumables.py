@@ -7,21 +7,24 @@ client = TestClient(app)
 
 
 @temp_database
-def test_create_equipment():
-    response = client.post("/equipments", json={
+def test_create_consumable():
+    response = client.post("/consumables", json={
         "id": 1,
-        "name": "test_equipment"})
+        "name": "test_consumable",
+        "price": 0,
+        "compatibility": "test_part"})
     assert response.status_code == 200
     assert response.json() == {
         "id": 1,
-        "name": "test_equipment",
-        "parts": []
+        "name": "test_consumable",
+        "price": 0,
+        "consumables": []
     }
 
 
 @temp_database
-def test_delete_equipment():
-    response = client.delete("/equipments")
+def test_delete_consumable():
+    response = client.delete("/consumables")
     assert response.status_code == 200
     assert response.json() == []
 
