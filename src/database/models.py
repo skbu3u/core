@@ -22,6 +22,9 @@ class EquipmentModel(Base):
                             secondary="equipment_part",
                             backref="equipments")
 
+    def __repr__(self):
+        return "{'name': '%s', 'contains': %s}" % (self.name, self.contains)
+
 
 equipment_part = Table('equipment_part', Base.metadata,
                        Column('equipments_id', ForeignKey('equipments.id'), primary_key=True),
@@ -40,6 +43,9 @@ class PartModel(Base):
                             secondary="part_consumable",
                             backref="parts")
 
+    def __repr__(self):
+        return "{'name': '%s', 'Price': %s, 'contains': %s}" % (self.name, self.price, self.contains)
+
 
 part_consumable = Table('part_consumable', Base.metadata,
                         Column('parts_id', ForeignKey('parts.id'), primary_key=True),
@@ -54,3 +60,6 @@ class ConsumableModel(Base):
     name = Column(String, unique=True)
     price = Column(Integer)
     compatibility = Column(String)
+
+    def __repr__(self):
+        return "{'name': '%s', 'Price': %s}" % (self.name, self.price)

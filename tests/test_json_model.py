@@ -1,9 +1,23 @@
 from fastapi.testclient import TestClient
 
 from main import app
+from src.database.models import EquipmentModel, PartModel, ConsumableModel
 from tests.conftest import temp_database, drop_temp_database
 
 client = TestClient(app)
+
+
+def test_add_parts_and_consumable_to_equipment():
+    equipment = EquipmentModel(name='HP LaserJet 1020')
+    part = PartModel(name='Repair kit for LaserJet 1020', price=40)
+    consumable = ConsumableModel(name='Feed Drive', price=15)
+    equipment.contains.append(part)
+    part.contains.append(consumable)
+    assert isinstance(equipment, EquipmentModel)
+    for item in equipment.contains:
+        assert isinstance(item, PartModel)
+    for item in part.contains:
+        assert isinstance(item, ConsumableModel)
 
 
 @temp_database

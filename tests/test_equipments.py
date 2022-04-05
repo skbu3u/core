@@ -1,9 +1,22 @@
+import pytest
 from fastapi.testclient import TestClient
 
 from main import app
+from src.database.models import EquipmentModel
 from tests.conftest import temp_database, drop_temp_database
 
 client = TestClient(app)
+
+
+def test_init_equipment():
+    equipment = EquipmentModel(name='HP LaserJet 1020')
+    assert isinstance(equipment, EquipmentModel)
+
+
+def test_exception_if_equipment_name_not_a_string():
+    with pytest.raises(Exception) as ex:
+        EquipmentModel([])
+    assert ex.type == TypeError
 
 
 @temp_database
