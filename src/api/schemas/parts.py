@@ -6,8 +6,10 @@ from pydantic import BaseModel, validator
 from src.api.schemas.consumables import Consumable
 
 
-class PartBase(BaseModel):
+class PartCreate(BaseModel):
     name: str
+    price: int
+    compatibility: str
 
     @validator('name')
     def name_match(cls, name):
@@ -15,19 +17,14 @@ class PartBase(BaseModel):
             raise ValueError(f"Name '{name}' is incorrect")
         return name.lower()
 
-    price: int
-    # TODO Add price validations
-
-
-class PartCreate(PartBase):
-    compatibility: str
+    # TODO Add price validations for parts
 
     @validator('compatibility')
     def compatibility_match(cls, compatibility):
         return compatibility.lower()
 
 
-class Part(PartBase):
+class Part(PartCreate):
     id: int
     contains: List[Consumable] = []
 

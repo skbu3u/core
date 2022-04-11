@@ -56,4 +56,3 @@ def create_one(consumable: ConsumableCreate, db: Session = Depends(get_db)):
     add_to_db(db=db, model=ConsumableModel, new_model=new_consumable)
     check_compatibility(db=db, schema=consumable, model=PartModel, new_model=new_consumable)
     return new_consumable
-

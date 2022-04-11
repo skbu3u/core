@@ -6,7 +6,7 @@ from pydantic import BaseModel, validator
 from src.api.schemas.parts import Part
 
 
-class EquipmentBase(BaseModel):
+class EquipmentCreate(BaseModel):
     name: str
 
     @validator('name')
@@ -16,11 +16,7 @@ class EquipmentBase(BaseModel):
         return name.lower()
 
 
-class EquipmentCreate(EquipmentBase):
-    pass
-
-
-class Equipment(EquipmentBase):
+class Equipment(EquipmentCreate):
     id: int
     contains: List[Part] = []
 

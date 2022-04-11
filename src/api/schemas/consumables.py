@@ -3,8 +3,10 @@ import re
 from pydantic import BaseModel, validator
 
 
-class ConsumableBase(BaseModel):
+class ConsumableCreate(BaseModel):
     name: str
+    price: int
+    compatibility: str
 
     @validator('name')
     def name_match(cls, name):
@@ -12,18 +14,14 @@ class ConsumableBase(BaseModel):
             raise ValueError(f"Name '{name}' is incorrect")
         return name.lower()
 
-    price: int
-
-
-class ConsumableCreate(ConsumableBase):
-    compatibility: str
+    # TODO Add price validations for consumables
 
     @validator('compatibility')
     def compatibility_match(cls, compatibility):
         return compatibility.lower()
 
 
-class Consumable(ConsumableBase):
+class Consumable(ConsumableCreate):
     id: int
 
     class Config:
