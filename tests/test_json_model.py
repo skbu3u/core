@@ -46,11 +46,13 @@ def test_read_equipment_with_part_and_consumable():
                     "name": "test_part",
                     "price": 0,
                     "id": 1,
+                    'compatibility': 'test_equipment',
                     "contains": [
                         {
                             "name": "test_consumable",
                             "price": 0,
-                            "id": 1
+                            "id": 1,
+                            'compatibility': 'test_part'
                         }
                     ]
                 }
