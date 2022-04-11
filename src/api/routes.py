@@ -2,6 +2,7 @@ from fastapi import Depends
 from fastapi_crudrouter import SQLAlchemyCRUDRouter
 from sqlalchemy.orm import Session
 
+from src.api.authorization import AuthHandler
 from src.api.schemas.consumables import Consumable, ConsumableCreate
 from src.api.schemas.equipments import Equipment, EquipmentCreate
 from src.api.schemas.parts import Part, PartCreate
@@ -21,7 +22,8 @@ def add_route(schema, create_schema, db_model, prefix, create_route=False):
         db_model=db_model,
         db=get_db,
         prefix=prefix,
-        create_route=create_route
+        create_route=create_route,
+        dependencies=[Depends(AuthHandler().auth_wrapper)]
     )
     return route
 

@@ -8,13 +8,12 @@ from src.database.service import add_to_db, check_exist_in_db
 from src.database.sql import get_db
 
 route = APIRouter()
-auth_handler = AuthHandler()
 
 
 @route.post('/register', status_code=201)
 async def register_new_user(user: UserCreate, db: Session = Depends(get_db)):
     check_exist_in_db(db=db, schema=user, model=UserModel)
-    new_user = UserModel(name=user.name, password=auth_handler.get_password_hash(user.password))
+    new_user = UserModel(name=user.name, password=AuthHandler().get_password_hash(user.password))
     add_to_db(db=db, model=UserModel, new_model=new_user)
     return {'msg': f'User {user.name} created'}
 
@@ -22,8 +21,8 @@ async def register_new_user(user: UserCreate, db: Session = Depends(get_db)):
 @route.post('/login')
 async def login(user: UserCreate, db: Session = Depends(get_db)):
     db_user = db.query(UserModel).filter(UserModel.name == user.name).first()
-    if db_user and auth_handler.verify_password(user.password, db_user.password):
-        token = auth_handler.encode_token(user.name)
+    if db_user and AuthHandler().verify_password(user.password, db_user.password):
+        token = AuthHandler().encode_token(user.name)
         return db_user, {'token': token}
     raise HTTPException(status_code=401, detail='Invalid username and/or password')
 
@@ -34,5 +33,5 @@ async def unprotected():
 
 
 @route.get('/protected')
-async def protected(name=Depends(auth_handler.auth_wrapper)):
+async def protected(name=Depends(AuthHandler().auth_wrapper)):
     return {'msg': f'User {name} is authorized'}
