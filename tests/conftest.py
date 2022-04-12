@@ -51,3 +51,19 @@ def drop_temp_database():
     assert database_exists(test_database)
     # Drop the test database
     drop_database(test_database)
+
+
+def user_authorization(test_client):
+    test_client.post("/security/register", json={
+        "id": 1,
+        "name": "test_user",
+        "password": "test_password"})
+    response = test_client.post("/security/login", json={
+        "name": "test_user",
+        "password": "test_password"}
+    )
+    assert response.status_code == 200
+    data = response.json()
+    token = data[1]["token"]
+    assert data[0]["name"] == "test_user"
+    return {"Authorization": f"Bearer {token}"}

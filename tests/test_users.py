@@ -1,7 +1,7 @@
 from fastapi.testclient import TestClient
 
 from main import app
-from tests.conftest import temp_database, drop_temp_database
+from tests.conftest import temp_database, drop_temp_database, user_authorization
 
 client = TestClient(app)
 
@@ -19,7 +19,7 @@ def test_create_user():
 
 @temp_database
 def test_delete_user():
-    response = client.delete("/users")
+    response = client.delete("/users", headers=user_authorization(client))
     assert response.status_code == 200
     assert response.json() == []
 

@@ -2,7 +2,7 @@ from fastapi.testclient import TestClient
 
 from main import app
 from src.database.models import EquipmentModel, PartModel, ConsumableModel
-from tests.conftest import temp_database, drop_temp_database
+from tests.conftest import temp_database, drop_temp_database, user_authorization
 
 client = TestClient(app)
 
@@ -22,20 +22,20 @@ def test_add_parts_and_consumable_to_equipment():
 
 @temp_database
 def test_read_equipment_with_part_and_consumable():
-    client.post("/equipments", json={
+    client.post("/equipments", headers=user_authorization(client), json={
         "id": 1,
         "name": "test_equipment"})
-    client.post("/parts", json={
+    client.post("/parts", headers=user_authorization(client), json={
         "id": 1,
         "name": "test_part",
         "price": 0,
         "compatibility": "test_equipment"})
-    client.post("/consumables", json={
+    client.post("/consumables", headers=user_authorization(client), json={
         "id": 1,
         "name": "test_consumable",
         "price": 0,
         "compatibility": "test_part"})
-    response = client.get("/equipments")
+    response = client.get("/equipments", headers=user_authorization(client))
     assert response.status_code == 200
     assert response.json() == [
         {
