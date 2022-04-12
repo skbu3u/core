@@ -9,6 +9,11 @@ from src.database.sql import Base, get_db
 test_database = "sqlite:///test.db"
 
 
+@pytest.fixture(scope="session")
+def sqlalchemy_connect_url():
+    return test_database
+
+
 @pytest.fixture(scope="function")
 def local_session():
     # settings of test database
