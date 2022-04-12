@@ -1,11 +1,11 @@
 from pytest_sqlalchemy import connection, transaction, sqlalchemy_connect_url, engine
 
-from tests.conftest import temp_database, database_exists, drop_temp_database
+from tests.conftest import temp_database, database_exists, drop_temp_database, test_database
 
 
 @temp_database
 def test_exist_database():
-    assert database_exists("sqlite:///test.db")
+    assert database_exists(test_database)
 
 
 @temp_database
