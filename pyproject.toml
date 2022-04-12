@@ -19,6 +19,7 @@ fastapi-crudrouter = "^0.8.5"
 python-dotenv = "^0.19.2"
 SQLAlchemy-Utils = "^0.38.2"
 pytest-cov = "^3.0.0"
+pytest-sqlalchemy = "^0.2.1"
 
 [tool.poetry.dev-dependencies]
 
