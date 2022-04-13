@@ -11,7 +11,7 @@ route = APIRouter()
 
 
 @route.post('/register', status_code=201)
-async def register_new_user(user: UserCreate, db: Session = Depends(get_db)):
+def register_new_user(user: UserCreate, db: Session = Depends(get_db)):
     check_exist_in_db(db=db, schema=user, model=UserModel)
     new_user = UserModel(name=user.name, password=AuthHandler().get_password_hash(user.password))
     add_to_db(db=db, model=UserModel, new_model=new_user)
@@ -19,7 +19,7 @@ async def register_new_user(user: UserCreate, db: Session = Depends(get_db)):
 
 
 @route.post('/login')
-async def login(user: UserCreate, db: Session = Depends(get_db)):
+def login(user: UserCreate, db: Session = Depends(get_db)):
     db_user = db.query(UserModel).filter(UserModel.name == user.name).first()
     if db_user and AuthHandler().verify_password(user.password, db_user.password):
         token = AuthHandler().encode_token(user.name)
@@ -28,10 +28,10 @@ async def login(user: UserCreate, db: Session = Depends(get_db)):
 
 
 @route.get('/unprotected')
-async def unprotected():
+def unprotected():
     return {'msg': 'Not authenticated'}
 
 
 @route.get('/protected')
-async def protected(name=Depends(AuthHandler().auth_wrapper)):
+def protected(name=Depends(AuthHandler().auth_wrapper)):
     return {'msg': f'User {name} is authorized'}
