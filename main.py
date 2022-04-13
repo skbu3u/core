@@ -28,13 +28,14 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-    expose_headers=["*"])
+    expose_headers=["*"],
+    max_age=6000)
 
 
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next):
     response = await call_next(request)
-    print(f'Response headers: {response.headers}')
+    # print(f'Response: {Request.__text_signature__}')
     return response
 
 
