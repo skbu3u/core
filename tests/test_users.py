@@ -14,7 +14,8 @@ def test_create_user():
         "password": "test_password"}
     )
     assert response.status_code == 201
-    assert response.json() == {'msg': 'User test_user created'}
+    data = response.json()
+    assert data[1] == {'msg': 'User test_user created'}
 
 
 @temp_database
