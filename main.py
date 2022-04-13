@@ -1,8 +1,9 @@
 import os
+import time
 
 import uvicorn
 from dotenv import load_dotenv
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.api import security
@@ -27,8 +28,14 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-    expose_headers=["*"]
-)
+    expose_headers=["*"])
+
+
+@app.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+    response = await call_next(request)
+    print(f'Response headers: {response.headers}')
+    return response
 
 
 @app.get("/")

@@ -10,7 +10,7 @@ from src.database.sql import get_db
 route = APIRouter()
 
 
-@route.post('/register')
+@route.post('/register', status_code=201)
 async def register_new_user(user: UserCreate, db: Session = Depends(get_db)):
     check_exist_in_db(db=db, schema=user, model=UserModel)
     new_user = UserModel(name=user.name, password=AuthHandler().get_password_hash(user.password))
