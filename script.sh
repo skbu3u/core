@@ -4,6 +4,7 @@ clear
 echo ""
 
 echo "==> Update core from Git"
+git reset --hard
 git fetch
 git pull
 echo ""
