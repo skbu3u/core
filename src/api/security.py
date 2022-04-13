@@ -15,7 +15,7 @@ async def register_new_user(user: UserCreate, db: Session = Depends(get_db)):
     check_exist_in_db(db=db, schema=user, model=UserModel)
     new_user = UserModel(name=user.name, password=AuthHandler().get_password_hash(user.password))
     add_to_db(db=db, model=UserModel, new_model=new_user)
-    return {'msg': f'User {user.name} created'}
+    return new_user, {'msg': f'User {user.name} created'}
 
 
 @route.post('/login')
