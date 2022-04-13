@@ -22,14 +22,6 @@ finally:
 
 routes = APIRouter()
 app = FastAPI()
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-    expose_headers=["*"],
-    max_age=60)
 
 
 @app.get("/")
@@ -44,7 +36,13 @@ routes.include_router(parts)
 routes.include_router(consumables)
 
 app.include_router(routes)
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    expose_headers=["*"])
 
 if __name__ == '__main__':
     uvicorn.run('main:app', host=host, port=port, reload=True, log_level="info")
