@@ -23,7 +23,7 @@ def add_route(schema, create_schema, db_model, prefix, create_route=False):
         db=get_db,
         prefix=prefix,
         create_route=create_route,
-        dependencies=[Depends(AuthHandler().auth_wrapper)]
+        # dependencies=[Depends(AuthHandler().auth_wrapper)]
     )
     return route
 
