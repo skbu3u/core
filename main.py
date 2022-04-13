@@ -17,8 +17,8 @@ except Exception as ex:
     print(f"Can't load dotenv: {ex}")
     host = '127.0.0.1'
     port = 8000
-finally:
-    origins = [f"http://{host}", f"http://{host}:{port}"]
+# finally:
+#     origins = [f"http://{host}", f"http://{host}:{port}"]
 
 routes = APIRouter()
 app = FastAPI()
@@ -36,9 +36,11 @@ routes.include_router(parts)
 routes.include_router(consumables)
 
 app.include_router(routes)
+origins = ["*"]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    app=app,
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
