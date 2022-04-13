@@ -1,10 +1,10 @@
 import os
-import time
 
 import uvicorn
 from dotenv import load_dotenv
-from fastapi import FastAPI, APIRouter, Request
+from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.gzip import GZipMiddleware
 
 from src.api import security
 from src.api.routes import users, equipments, parts, consumables
@@ -37,9 +37,9 @@ routes.include_router(consumables)
 
 app.include_router(routes)
 origins = ["*"]
+app.add_middleware(GZipMiddleware)
 app.add_middleware(
     CORSMiddleware,
-    app=app,
     allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
