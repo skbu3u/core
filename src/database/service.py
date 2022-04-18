@@ -20,3 +20,10 @@ def check_compatibility(db, schema, model, new_model):
         db_model = db.query(model).filter(model.name == compatibility).first()
         if db_model:
             db_model.contains.append(new_model)
+
+
+def check_contains(db, schema, model, new_model):
+    db_models = db.query(model).filter(model.compatibility.ilike(f'%{schema.name}%')).all()
+    if db_models:
+        for db_model in db_models:
+            new_model.contains.append(db_model)

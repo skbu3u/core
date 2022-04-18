@@ -2,7 +2,6 @@ from fastapi import Depends
 from fastapi_crudrouter import SQLAlchemyCRUDRouter
 from sqlalchemy.orm import Session
 
-from src.api.authorization import AuthHandler
 from src.api.schemas.consumables import Consumable, ConsumableCreate
 from src.api.schemas.equipments import Equipment, EquipmentCreate
 from src.api.schemas.parts import Part, PartCreate
@@ -11,7 +10,7 @@ from src.database.models import ConsumableModel
 from src.database.models import EquipmentModel
 from src.database.models import PartModel
 from src.database.models import UserModel
-from src.database.service import check_exist_in_db, add_to_db, check_compatibility
+from src.database.service import check_exist_in_db, add_to_db, check_compatibility, check_contains
 from src.database.sql import get_db
 
 
@@ -39,6 +38,7 @@ def create_one(equipment: EquipmentCreate, db: Session = Depends(get_db)):
     check_exist_in_db(db=db, schema=equipment, model=EquipmentModel)
     new_equipment = EquipmentModel(name=equipment.name)
     add_to_db(db=db, model=EquipmentModel, new_model=new_equipment)
+    check_contains(db=db, schema=equipment, model=PartModel, new_model=new_equipment)
     return new_equipment
 
 
@@ -48,6 +48,7 @@ def create_one(part: PartCreate, db: Session = Depends(get_db)):
     new_part = PartModel(**part.dict())
     add_to_db(db=db, model=PartModel, new_model=new_part)
     check_compatibility(db=db, schema=part, model=EquipmentModel, new_model=new_part)
+    check_contains(db=db, schema=part, model=ConsumableModel, new_model=new_part)
     return new_part
 
 
