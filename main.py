@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api import security
+from src.api import security, search
 from src.api.routes import users, equipments, parts, consumables
 
 try:
@@ -35,11 +35,12 @@ def welcome_page():
     return {'msg': 'Hi from backend!'}
 
 
-routes.include_router(security.route, prefix='/security', tags=['Security'])
 routes.include_router(users)
 routes.include_router(equipments)
 routes.include_router(parts)
 routes.include_router(consumables)
+routes.include_router(search.route, prefix='/search', tags=['Search'])
+routes.include_router(security.route, prefix='/security', tags=['Security'])
 
 app.include_router(routes)
 

@@ -27,3 +27,10 @@ def check_contains(db, schema, model, new_model):
     if db_models:
         for db_model in db_models:
             new_model.contains.append(db_model)
+
+
+def search_by_name(db, model, name):
+    response = db.query(model).filter(model.name.ilike(f'%{name}%')).all()
+    if response:
+        return response
+    raise HTTPException(status_code=404, detail='No matches found')
