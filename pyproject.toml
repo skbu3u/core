@@ -5,10 +5,21 @@ description = "The core of the software product on the backend side"
 authors = ["Divider"]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = ">=3.8,<4.0"
+poetry = "^1.1.13"
 pytest = "^7.0.1"
 SQLAlchemy = "^1.4.32"
 alembic = "^1.7.6"
+fastapi = "^0.75.0"
+PyJWT = "^2.3.0"
+uvicorn = "^0.17.6"
+passlib = "^1.7.4"
+bcrypt = "^3.2.0"
+fastapi-crudrouter = "^0.8.5"
+python-dotenv = "^0.19.2"
+SQLAlchemy-Utils = "^0.38.2"
+pytest-cov = "^3.0.0"
+pytest-sqlalchemy = "^0.2.1"
 
 [tool.poetry.dev-dependencies]
 

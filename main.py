@@ -1,24 +1,49 @@
-from classes.SparePart import SparePart
-from classes.Equipment import Equipment
-from classes.Report import Report
+import os
 
-part_1 = SparePart('Картридж', 10)
-part_1_1 = SparePart('Тонер', 3)
-part_1_2 = SparePart('Вал', 5)
-part_1_3 = SparePart('Ракель', 2)
-part_2 = SparePart('Печь', 40)
-part_3 = SparePart('Плата', 70)
+import uvicorn
+from dotenv import load_dotenv
+from fastapi import FastAPI, APIRouter
+from fastapi.middleware.cors import CORSMiddleware
 
-part_1.add_part(part_1_1)
-part_1.add_part_list([part_1_2, part_1_3])
+from src.api import security, search
+from src.api.routes import users, equipments, parts, consumables
 
-model = Equipment('Принтер')
+try:
+    load_dotenv()
+    host = os.getenv('HOST')
+    port = int(os.getenv('PORT'))
+except Exception as ex:
+    print(f"Can't load dotenv: {ex}")
+    host = '127.0.0.1'
+    port = 8000
+finally:
+    origins = ["*"]  # [f"http://{host}", f"http://{host}:{port}"]
 
-model.add_part(part_1)
-model.add_part_list([part_2, part_3])
+routes = APIRouter()
+app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    expose_headers=["*"])
 
-report = Report(model)
+
+@app.get("/")
+def welcome_page():
+    return {'msg': 'Hi from backend!'}
+
+
+routes.include_router(users)
+routes.include_router(equipments)
+routes.include_router(parts)
+routes.include_router(consumables)
+routes.include_router(search.route, prefix='/search', tags=['Search'])
+routes.include_router(security.route, prefix='/security', tags=['Security'])
+
+app.include_router(routes)
 
 
 if __name__ == '__main__':
-    print(report.info)
+    uvicorn.run('main:app', host=host, port=port, reload=True, timeout_keep_alive=0, log_level="info", use_colors=True)

@@ -1,2 +1,0 @@
-class ClassInitializationError(NameError):
-    pass
