@@ -46,4 +46,4 @@ app.include_router(routes)
 
 
 if __name__ == '__main__':
-    uvicorn.run('main:app', host=host, port=port, reload=True, log_level="info")
+    uvicorn.run('main:app', host=host, port=port, reload=True, timeout_keep_alive=0, log_level="info", use_colors=True)
