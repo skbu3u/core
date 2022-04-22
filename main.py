@@ -1,33 +1,10 @@
-import os
-
 import uvicorn
-from dotenv import load_dotenv
-from fastapi import FastAPI, APIRouter
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi.testclient import TestClient
 
-from src.api import security, search
-from src.api.routes import users, equipments, parts, consumables
-
-try:
-    load_dotenv()
-    host = os.getenv('HOST')
-    port = int(os.getenv('PORT'))
-except Exception as ex:
-    print(f"Can't load dotenv: {ex}")
-    host = '127.0.0.1'
-    port = 8000
-finally:
-    origins = ["*"]  # [f"http://{host}", f"http://{host}:{port}"]
-
-routes = APIRouter()
-app = FastAPI()
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-    expose_headers=["*"])
+from cfg import app, main_router, host, port
+from src.api.routes.base import users, equipments, parts, consumables
+from src.api.routes.search import search
+from src.api.routes.security import security
 
 
 @app.get("/")
@@ -35,15 +12,22 @@ def welcome_page():
     return {'msg': 'Hi from backend!'}
 
 
-routes.include_router(users)
-routes.include_router(equipments)
-routes.include_router(parts)
-routes.include_router(consumables)
-routes.include_router(search.route, prefix='/search', tags=['Search'])
-routes.include_router(security.route, prefix='/security', tags=['Security'])
+main_router.include_router(users)
+main_router.include_router(equipments)
+main_router.include_router(parts)
+main_router.include_router(consumables)
+main_router.include_router(search, prefix='/search', tags=['Search'])
+main_router.include_router(security, prefix='/security', tags=['Security'])
 
-app.include_router(routes)
+app.include_router(main_router)
+client = TestClient(app)
 
 
 if __name__ == '__main__':
-    uvicorn.run('main:app', host=host, port=port, reload=True, timeout_keep_alive=0, log_level="info", use_colors=True)
+    uvicorn.run('main:app',
+                host=host,
+                port=port,
+                reload=True,
+                timeout_keep_alive=0,
+                log_level="info",
+                use_colors=True)
