@@ -1,9 +1,5 @@
-from fastapi.testclient import TestClient
-
-from main import app
+from main import client
 from tests.conftest import temp_database, drop_temp_database, user_authorization
-
-client = TestClient(app)
 
 
 @temp_database

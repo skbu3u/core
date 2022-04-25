@@ -33,4 +33,4 @@ def search_by_name(db, model, name):
     response = db.query(model).filter(model.name.ilike(f'%{name}%')).all()
     if response:
         return response
-    raise HTTPException(status_code=404, detail='No matches found')
+    raise HTTPException(status_code=200, detail='No matches found')
