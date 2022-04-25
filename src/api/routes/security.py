@@ -1,14 +1,13 @@
-from fastapi import Depends, HTTPException
+from fastapi import Depends, HTTPException, APIRouter
 from sqlalchemy.orm import Session
 
-from cfg import additional_router
 from src.api.authorization import AuthHandler
 from src.api.schemas.users import UserCreate
 from src.database.models import UserModel
 from src.database.service import add_to_db, check_exist_in_db
 from src.database.sql import get_db
 
-security = additional_router
+security = APIRouter()
 
 
 @security.post('/register', status_code=201)

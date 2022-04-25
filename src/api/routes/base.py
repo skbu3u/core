@@ -1,3 +1,5 @@
+from typing import Optional, List
+
 from fastapi import Depends
 from fastapi_crudrouter import SQLAlchemyCRUDRouter
 from sqlalchemy.orm import Session
@@ -66,6 +68,6 @@ def create_one(consumable: ConsumableCreate, db: Session = Depends(get_db)):
 @tasks.post("", response_model=Task)
 def create_one(task: TaskCreate, db: Session = Depends(get_db)):
     check_exist_in_db(db=db, schema=task, model=TaskModel)
-    new_task = TaskModel(**task.dict())
+    new_task = TaskModel(name=task.name)
     add_to_db(db=db, model=TaskModel, new_model=new_task)
     return new_task

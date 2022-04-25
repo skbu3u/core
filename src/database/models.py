@@ -1,4 +1,4 @@
-from sqlalchemy import Table, Column, ForeignKey, Boolean, Integer, String
+from sqlalchemy import Table, Column, ForeignKey, Boolean, Integer, String, JSON
 from sqlalchemy.orm import relationship
 
 from src.database.sql import Base
@@ -68,7 +68,7 @@ class TaskModel(Base):
     __tablename__ = 'tasks'
     id = Column(Integer, primary_key=True, index=True, unique=True)
     name = Column(String, unique=True)
-    contains = Column(String)
+    contains = Column(JSON)
 
     def __repr__(self):
         return "{'name': '%s', 'contains': %s}" % (self.name, self.contains)

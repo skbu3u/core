@@ -1,9 +1,8 @@
 from typing import Optional, List
 
-from fastapi import Depends
+from fastapi import Depends, APIRouter
 from sqlalchemy.orm import Session
 
-from cfg import additional_router
 from src.api.schemas.consumables import Consumable
 from src.api.schemas.equipments import Equipment
 from src.api.schemas.parts import Part
@@ -12,7 +11,7 @@ from src.database.models import UserModel, EquipmentModel, PartModel, Consumable
 from src.database.service import search_by_name
 from src.database.sql import get_db
 
-search = additional_router
+search = APIRouter()
 
 
 @search.get('/users/{name}',
