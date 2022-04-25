@@ -6,8 +6,9 @@ from sqlalchemy.orm import Session
 from src.api.schemas.consumables import Consumable
 from src.api.schemas.equipments import Equipment
 from src.api.schemas.parts import Part
+from src.api.schemas.tasks import Task
 from src.api.schemas.users import User
-from src.database.models import UserModel, EquipmentModel, PartModel, ConsumableModel
+from src.database.models import UserModel, EquipmentModel, PartModel, ConsumableModel, TaskModel
 from src.database.service import search_by_name
 from src.database.sql import get_db
 
@@ -40,3 +41,10 @@ def get_all_matches(name: str, db: Session = Depends(get_db)):
             response_model_exclude={"price", "compatibility", "contains"})
 def get_all_matches(name: str, db: Session = Depends(get_db)):
     return search_by_name(db=db, model=ConsumableModel, name=name)
+
+
+@search.get('/tasks/{name}',
+            response_model=Optional[List[Task]],
+            response_model_exclude={"contains"})
+def get_all_matches(name: str, db: Session = Depends(get_db)):
+    return search_by_name(db=db, model=TaskModel, name=name)

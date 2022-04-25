@@ -1,5 +1,3 @@
-from typing import Optional, List
-
 from fastapi import Depends
 from fastapi_crudrouter import SQLAlchemyCRUDRouter
 from sqlalchemy.orm import Session

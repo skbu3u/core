@@ -69,4 +69,3 @@ def test_delete_task():
 
 def test_existing_temp_database():
     drop_temp_database()
-    
