@@ -2,7 +2,7 @@ import uvicorn
 from fastapi.testclient import TestClient
 
 from cfg import app, main_router, host, port
-from src.api.routes.base import users, equipments, parts, consumables
+from src.api.routes.base import users, equipments, parts, consumables, tasks
 from src.api.routes.search import search
 from src.api.routes.security import security
 
@@ -16,6 +16,7 @@ main_router.include_router(users)
 main_router.include_router(equipments)
 main_router.include_router(parts)
 main_router.include_router(consumables)
+main_router.include_router(tasks)
 main_router.include_router(search, prefix='/search', tags=['Search'])
 main_router.include_router(security, prefix='/security', tags=['Security'])
 

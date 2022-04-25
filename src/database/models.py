@@ -62,3 +62,13 @@ class ConsumableModel(Base):
 
     def __repr__(self):
         return "{'name': '%s', 'Price': %s}" % (self.name, self.price)
+
+
+class TaskModel(Base):
+    __tablename__ = 'tasks'
+    id = Column(Integer, primary_key=True, index=True, unique=True)
+    name = Column(String, unique=True)
+    contains = Column(String)
+
+    def __repr__(self):
+        return "{'name': '%s', 'contains': %s}" % (self.name, self.contains)

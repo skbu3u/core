@@ -5,8 +5,9 @@ from sqlalchemy.orm import Session
 from src.api.schemas.consumables import Consumable, ConsumableCreate
 from src.api.schemas.equipments import Equipment, EquipmentCreate
 from src.api.schemas.parts import Part, PartCreate
+from src.api.schemas.tasks import Task, TaskCreate
 from src.api.schemas.users import User, UserCreate
-from src.database.models import ConsumableModel
+from src.database.models import ConsumableModel, TaskModel
 from src.database.models import EquipmentModel
 from src.database.models import PartModel
 from src.database.models import UserModel
@@ -31,6 +32,7 @@ users = add_route(User, UserCreate, UserModel, 'users')
 equipments = add_route(Equipment, EquipmentCreate, EquipmentModel, 'equipments')
 parts = add_route(Part, PartCreate, PartModel, 'parts')
 consumables = add_route(Consumable, ConsumableCreate, ConsumableModel, 'consumables')
+tasks = add_route(Task, TaskCreate, TaskModel, 'tasks')
 
 
 @equipments.post("", response_model=Equipment)
@@ -59,3 +61,11 @@ def create_one(consumable: ConsumableCreate, db: Session = Depends(get_db)):
     add_to_db(db=db, model=ConsumableModel, new_model=new_consumable)
     check_compatibility(db=db, schema=consumable, model=PartModel, new_model=new_consumable)
     return new_consumable
+
+
+@tasks.post("", response_model=Task)
+def create_one(task: TaskCreate, db: Session = Depends(get_db)):
+    check_exist_in_db(db=db, schema=task, model=TaskModel)
+    new_task = TaskModel(**task.dict())
+    add_to_db(db=db, model=TaskModel, new_model=new_task)
+    return new_task
