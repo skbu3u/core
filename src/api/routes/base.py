@@ -35,37 +35,41 @@ consumables = add_route(Consumable, ConsumableCreate, ConsumableModel, 'consumab
 tasks = add_route(Task, TaskCreate, TaskModel, 'tasks')
 
 
-@equipments.post("", response_model=Equipment)
+@equipments.post("", response_model=Equipment, status_code=201)
 def create_one(equipment: EquipmentCreate, db: Session = Depends(get_db)):
     check_exist_in_db(db=db, schema=equipment, model=EquipmentModel)
     new_equipment = EquipmentModel(name=equipment.name)
     add_to_db(db=db, model=EquipmentModel, new_model=new_equipment)
     check_contains(db=db, schema=equipment, model=PartModel, new_model=new_equipment)
-    return new_equipment
+    # return new_equipment
+    return 'Created'
 
 
-@parts.post("", response_model=Equipment)
+@parts.post("", response_model=Equipment, status_code=201)
 def create_one(part: PartCreate, db: Session = Depends(get_db)):
     check_exist_in_db(db=db, schema=part, model=PartModel)
     new_part = PartModel(**part.dict())
     add_to_db(db=db, model=PartModel, new_model=new_part)
     check_compatibility(db=db, schema=part, model=EquipmentModel, new_model=new_part)
     check_contains(db=db, schema=part, model=ConsumableModel, new_model=new_part)
-    return new_part
+    # return new_part
+    return 'Created'
 
 
-@consumables.post("", response_model=Part)
+@consumables.post("", response_model=Part, status_code=201)
 def create_one(consumable: ConsumableCreate, db: Session = Depends(get_db)):
     check_exist_in_db(db=db, schema=consumable, model=ConsumableModel)
     new_consumable = ConsumableModel(**consumable.dict())
     add_to_db(db=db, model=ConsumableModel, new_model=new_consumable)
     check_compatibility(db=db, schema=consumable, model=PartModel, new_model=new_consumable)
-    return new_consumable
+    # return new_consumable
+    return 'Created'
 
 
-@tasks.post("", response_model=Task)
+@tasks.post("", response_model=Task, status_code=201)
 def create_one(task: TaskCreate, db: Session = Depends(get_db)):
     check_exist_in_db(db=db, schema=task, model=TaskModel)
     new_task = TaskModel(name=task.name)
     add_to_db(db=db, model=TaskModel, new_model=new_task)
-    return new_task
+    # return new_task
+    return 'Created'
