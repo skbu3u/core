@@ -9,7 +9,7 @@ class TaskCreate(BaseModel):
 
     @validator('name')
     def name_match(cls, name):
-        if name and not re.match(r'^[\w\s.-]+$', name):
+        if name and not re.match(r'^[\w\s]+$', name):
             raise ValueError(f"Name '{name}' is incorrect")
         return name.lower()
 
