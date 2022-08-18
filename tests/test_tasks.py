@@ -31,7 +31,7 @@ def test_create_task():
                 ]
             }
         ]})
-    assert response.status_code == 200
+    assert response.status_code == 201
     assert response.json() == {
         "id": 1,
         "name": "test_task",

@@ -32,7 +32,7 @@ def test_read_equipment_with_part_and_consumable():
         "price": 0,
         "compatibility": "test_part"})
     response = client.get("/equipments", headers=user_authorization(client))
-    assert response.status_code == 200
+    assert response.status_code == 201
     assert response.json() == [
         {
             "name": "test_equipment",

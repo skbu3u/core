@@ -21,7 +21,7 @@ def test_create_equipment():
     response = client.post("/equipments", headers=user_authorization(client), json={
         "id": 1,
         "name": "test_equipment"})
-    assert response.status_code == 200
+    assert response.status_code == 201
     assert response.json() == {
         "id": 1,
         "name": "test_equipment",

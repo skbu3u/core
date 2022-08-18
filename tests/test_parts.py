@@ -23,7 +23,7 @@ def test_create_part():
         "name": "test_part",
         "price": 0,
         "compatibility": "test_equipment"})
-    assert response.status_code == 200
+    assert response.status_code == 201
     assert response.json() == {
         "id": 1,
         "name": "test_part",
