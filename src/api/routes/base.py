@@ -41,7 +41,7 @@ def create_one(equipment: EquipmentCreate, db: Session = Depends(get_db)):
     new_equipment = EquipmentModel(name=equipment.name)
     add_to_db(db=db, model=EquipmentModel, new_model=new_equipment)
     check_contains(db=db, schema=equipment, model=PartModel, new_model=new_equipment)
-    return new_equipment, {'msg': 'Created'}
+    return new_equipment
 
 
 @parts.post("", response_model=Equipment, status_code=201)
@@ -51,7 +51,7 @@ def create_one(part: PartCreate, db: Session = Depends(get_db)):
     add_to_db(db=db, model=PartModel, new_model=new_part)
     check_compatibility(db=db, schema=part, model=EquipmentModel, new_model=new_part)
     check_contains(db=db, schema=part, model=ConsumableModel, new_model=new_part)
-    return new_part, {'msg': 'Created'}
+    return new_part
 
 
 @consumables.post("", response_model=Part, status_code=201)
@@ -60,7 +60,7 @@ def create_one(consumable: ConsumableCreate, db: Session = Depends(get_db)):
     new_consumable = ConsumableModel(**consumable.dict())
     add_to_db(db=db, model=ConsumableModel, new_model=new_consumable)
     check_compatibility(db=db, schema=consumable, model=PartModel, new_model=new_consumable)
-    return new_consumable, {'msg': 'Created'}
+    return new_consumable
 
 
 @tasks.post("", response_model=Task, status_code=201)
@@ -68,4 +68,4 @@ def create_one(task: TaskCreate, db: Session = Depends(get_db)):
     check_exist_in_db(db=db, schema=task, model=TaskModel)
     new_task = TaskModel(name=task.name)
     add_to_db(db=db, model=TaskModel, new_model=new_task)
-    return new_task, {'msg': 'Created'}
+    return new_task
