@@ -1,10 +1,6 @@
-from fastapi.testclient import TestClient
-
-from main import app
+from main import client
 from src.database.models import EquipmentModel, PartModel, ConsumableModel
 from tests.conftest import temp_database, drop_temp_database, user_authorization
-
-client = TestClient(app)
 
 
 def test_add_parts_and_consumable_to_equipment():
